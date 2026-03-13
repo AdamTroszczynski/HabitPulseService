@@ -8,7 +8,7 @@
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
     "format": "prettier --write \"./**/*.+(js|ts|cjs|mjs|json|md)\"",
-    "prepare": "git -C ../git config core.hooksPath ../server/.husky || true",
+    "prepare": "lefthook install",
     "lint-staged": "lint-staged",
     "prisma:push": "prisma db push",
     "prisma:generate": "prisma generate",
@@ -16,8 +16,8 @@
   },
   "lint-staged": {
     "*.+(js|ts|cjs|mjs|json|md|html|vue)": [
-      "eslint --quiet --fix",
-      "prettier --write --ignore-unknown"
+      "node_modules/.bin/eslint --quiet --fix",
+      "node_modules/.bin/prettier --write --ignore-unknown"
     ]
   },
   "dependencies": {
@@ -48,7 +48,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.5",
-    "husky": "^8.0.0",
+    "lefthook": "^2.1.4",
     "lint-staged": "^16.3.3",
     "prettier": "^3.8.1",
     "prisma": "^7.5.0",
