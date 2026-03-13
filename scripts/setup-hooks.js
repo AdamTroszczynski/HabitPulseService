@@ -1,17 +1,20 @@
-import { writeFileSync, chmodSync } from 'fs';
-import { execSync } from 'child_process';
+import { writeFileSync, chmodSync } from "fs";
+import { execSync } from "child_process";
 
-const root = execSync('git rev-parse --show-toplevel').toString().trim();
+const root = execSync("git rev-parse --show-toplevel")
+  .toString()
+  .trim()
+  .replace(/\\/g, "/");
 
 const hook = (name, args) => `#!/bin/sh
-export LEFTHOOK_BIN="${root}/server/node_modules/.bin/lefthook"
+export LEFTHOOK_BIN="${root}/server/node_modules/lefthook-windows-x64/bin/lefthook.exe"
 if [ "$LEFTHOOK" = "0" ]; then exit 0; fi
 "$LEFTHOOK_BIN" run "${name}" ${args}
 `;
 
-writeFileSync(`${root}/.git/hooks/pre-commit`, hook('pre-commit', '"$@"'));
-writeFileSync(`${root}/.git/hooks/commit-msg`, hook('commit-msg', '"$@"'));
-chmodSync(`${root}/.git/hooks/pre-commit`, 0o755);
-chmodSync(`${root}/.git/hooks/commit-msg`, 0o755);
+["pre-commit", "commit-msg", "prepare-commit-msg"].forEach((name) => {
+  writeFileSync(`${root}/.git/hooks/${name}`, hook(name, '"$@"'));
+  chmodSync(`${root}/.git/hooks/${name}`, 0o755);
+});
 
-console.log('✅ Git hooks installed');
+console.log("✅ Git hooks installed");
