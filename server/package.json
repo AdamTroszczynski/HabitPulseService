@@ -8,18 +8,21 @@
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
     "format": "prettier --write \"./**/*.+(js|ts|cjs|mjs|json|md)\"",
-    "prepare": "lefthook install",
+    "prepare": "lefthook install && node ../scripts/setup-hooks.js",
     "lint-staged": "lint-staged",
     "prisma:push": "prisma db push",
     "prisma:generate": "prisma generate",
     "prisma:migrate:deploy": "prisma migrate deploy"
   },
   "lint-staged": {
-    "*.+(js|ts|cjs|mjs|json|md|html|vue)": [
-      "node_modules/.bin/eslint --quiet --fix",
-      "node_modules/.bin/prettier --write --ignore-unknown"
-    ]
-  },
+  "*.+(js|ts|cjs|mjs)": [
+    "server/node_modules/.bin/eslint --quiet --fix --config server/.eslintrc.cjs",
+    "server/node_modules/.bin/prettier --write --ignore-unknown"
+  ],
+  "*.+(json|md|html|vue)": [
+    "server/node_modules/.bin/prettier --write --ignore-unknown"
+  ]
+},
   "dependencies": {
     "@prisma/adapter-pg": "^7.5.0",
     "@prisma/client": "^7.5.0",
