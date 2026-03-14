@@ -27,18 +27,13 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build --no-cache -t habitpulse-api:latest ./server
-          docker save habitpulse-api:latest | gzip > habitpulse-api.tar.gz
+          docker build --no-cache -t localhost:5000/habitpulse-api:latest ./server
 
-      - name: Debug SSH key
+      - name: Push image to VPS registry
         run: |
-          echo "${{ secrets.VPS_SSH_KEY }}" | head -1
-          echo "${{ secrets.VPS_SSH_KEY }}" | tail -1
-          echo "${{ secrets.VPS_SSH_KEY }}" | wc -l
-
-      - name: Copy image to VPS
-        run: |
-          scp habitpulse-api.tar.gz ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/projects/habitpulse-api/
+          ssh -L 5000:localhost:5000 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} -N -f
+          sleep 2
+          docker push localhost:5000/habitpulse-api:latest
 
       - name: Copy compose file to VPS
         run: |
@@ -48,6 +43,6 @@ jobs:
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} '
             cd /opt/projects/habitpulse-api &&
-            docker load < habitpulse-api.tar.gz &&
+            docker compose pull &&
             docker compose up -d
           '
