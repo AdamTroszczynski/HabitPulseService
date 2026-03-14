@@ -9,7 +9,17 @@
 * 🟢 You can import this file directly.
 */
 
+export const Lang = {
+  PL: 'PL'
+} as const
+
+export type Lang = (typeof Lang)[keyof typeof Lang]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const DateFormat = {
+  DD_MM_YYYY: 'DD_MM_YYYY',
+  MM_DD_YYYY: 'MM_DD_YYYY',
+  YYYY_MM_DD: 'YYYY_MM_DD'
+} as const
+
+export type DateFormat = (typeof DateFormat)[keyof typeof DateFormat]

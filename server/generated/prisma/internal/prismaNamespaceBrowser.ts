@@ -51,7 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Habit: 'Habit',
+  Reminder: 'Reminder',
+  Tracking: 'Tracking'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -73,10 +76,63 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name'
+  passwordHash: 'passwordHash',
+  name: 'name',
+  dateFormat: 'dateFormat',
+  lang: 'lang',
+  failedLoginAttempts: 'failedLoginAttempts',
+  isVerified: 'isVerified',
+  lastLogin: 'lastLogin',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const HabitScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  desc: 'desc',
+  color: 'color',
+  icon: 'icon',
+  frequency: 'frequency',
+  isArchived: 'isArchived',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HabitScalarFieldEnum = (typeof HabitScalarFieldEnum)[keyof typeof HabitScalarFieldEnum]
+
+
+export const ReminderScalarFieldEnum = {
+  id: 'id',
+  habitId: 'habitId',
+  isReminderActive: 'isReminderActive',
+  preferredTime: 'preferredTime',
+  frequency: 'frequency',
+  jobId: 'jobId',
+  nextScheduledAt: 'nextScheduledAt',
+  lastSentAt: 'lastSentAt',
+  reminderVersion: 'reminderVersion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReminderScalarFieldEnum = (typeof ReminderScalarFieldEnum)[keyof typeof ReminderScalarFieldEnum]
+
+
+export const TrackingScalarFieldEnum = {
+  id: 'id',
+  habitId: 'habitId',
+  day: 'day',
+  isFinished: 'isFinished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TrackingScalarFieldEnum = (typeof TrackingScalarFieldEnum)[keyof typeof TrackingScalarFieldEnum]
 
 
 export const SortOrder = {

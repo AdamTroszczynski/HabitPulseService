@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../../generated/prisma"
@@ -12,8 +7,77 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Lang {
+  PL @map("pl")
+}
+
+enum DateFormat {
+  DD_MM_YYYY @map("dd-mm-yyyy")
+  MM_DD_YYYY @map("mm-dd-yyyy")
+  YYYY_MM_DD @map("yyyy-mm-dd")
+}
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id                  Int        @id @default(autoincrement())
+  email               String     @unique @db.VarChar(255)
+  passwordHash        String     @map("password_hash")
+  name                String     @db.VarChar(40)
+  dateFormat          DateFormat @default(DD_MM_YYYY) @map("date_format")
+  lang                Lang       @default(PL)
+  failedLoginAttempts Int        @default(0) @map("failed_login_attempts")
+  habits              Habit[]
+  isVerified          Boolean    @default(false) @map("is_verified")
+  lastLogin           DateTime?  @map("last_login")
+  createdAt           DateTime   @default(now()) @map("created_at")
+  updatedAt           DateTime   @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Habit {
+  id         Int        @id @default(autoincrement())
+  userId     Int        @map("user_id")
+  user       User       @relation(fields: [userId], references: [id])
+  name       String     @db.VarChar(255)
+  desc       String?
+  color      String?
+  icon       String?
+  frequency  String[]   @default([])
+  isArchived Boolean    @default(false) @map("is_archived")
+  reminder   Reminder?
+  trackings  Tracking[]
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
+
+  @@map("habits")
+}
+
+model Reminder {
+  id               Int       @id @default(autoincrement())
+  habitId          Int       @unique @map("habit_id")
+  habit            Habit     @relation(fields: [habitId], references: [id])
+  isReminderActive Boolean   @default(false) @map("is_reminder_active")
+  preferredTime    String    @default("12:00") @map("preferred_time")
+  frequency        String[]  @default([])
+  jobId            String?   @map("job_id")
+  nextScheduledAt  DateTime? @map("next_scheduled_at")
+  lastSentAt       DateTime? @map("last_sent_at")
+  reminderVersion  Int       @default(0) @map("reminder_version")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+
+  @@map("reminders")
+}
+
+model Tracking {
+  id         Int      @id @default(autoincrement())
+  habitId    Int      @map("habit_id")
+  habit      Habit    @relation(fields: [habitId], references: [id])
+  day        DateTime @db.Date
+  isFinished Boolean  @default(false) @map("is_finished")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@unique([habitId, day])
+  @@map("trackings")
 }
