@@ -14,7 +14,7 @@ app.use(helmet());
 app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
-  res.send('<h1>Working</h1>');
+  res.send('<h1>Working2</h1>');
 });
 
 export default app;
