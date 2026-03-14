@@ -1,0 +1,22 @@
+services:
+  api:
+    image: localhost:5000/habitpulse-api:latest
+    restart: always
+    networks:
+      - traefik-public
+      - shared-services
+    environment:
+      - PORT=3000
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.habitpulse-api.rule=Host(`api.habitpulse.adamtroszczynski.pl`)'
+      - 'traefik.http.routers.habitpulse-api.tls.certresolver=letsencrypt'
+      - 'traefik.http.services.habitpulse-api.loadbalancer.server.port=3000'
+
+networks:
+  traefik-public:
+    external: true
+  shared-services:
+    external: true

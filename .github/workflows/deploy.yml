@@ -1,0 +1,48 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - preview
+    paths:
+      - 'server/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Build Docker image
+        run: |
+          docker build -t localhost:5000/habitpulse-api:latest ./server
+
+      - name: Push image to VPS registry
+        run: |
+          ssh -L 5000:localhost:5000 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} -N -f
+          sleep 2
+          docker push localhost:5000/habitpulse-api:latest
+
+      - name: Copy compose file to VPS
+        run: |
+          scp server/docker-compose.prod.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/projects/habitpulse-api/docker-compose.yml
+
+      - name: Deploy on VPS
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} '
+            cd /opt/projects/habitpulse-api &&
+            docker compose pull &&
+            docker compose up -d
+          '
