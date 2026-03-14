@@ -5,10 +5,8 @@ services:
     networks:
       - traefik-public
       - shared-services
-    environment:
-      - PORT=3000
-      - DATABASE_URL=${DATABASE_URL}
-      - JWT_SECRET=${JWT_SECRET}
+    env_file:
+      - .env
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.habitpulse-api.rule=Host(`api.habitpulse.adamtroszczynski.pl`)'
