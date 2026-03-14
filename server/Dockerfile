@@ -7,11 +7,11 @@ COPY src/prisma ./src/prisma/
 COPY prisma.config.ts ./
 
 RUN npm ci --ignore-scripts
+RUN npx prisma generate --schema=src/prisma/schema.prisma
 
 COPY . .
 
 RUN npm run build
-RUN npx prisma generate --schema=src/prisma/schema.prisma
 
 # ---- runtime ----
 FROM node:22-alpine AS runner
