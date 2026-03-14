@@ -37,5 +37,6 @@ jobs:
           scp server/docker-compose.prod.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/projects/habitpulse-api/docker-compose.yml
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} '
             cd /opt/projects/habitpulse-api &&
+            docker pull localhost:5000/habitpulse-api:latest &&
             docker compose up -d --pull never
           '
