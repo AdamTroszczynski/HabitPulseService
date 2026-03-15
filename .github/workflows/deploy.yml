@@ -39,9 +39,10 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build \
+          docker buildx build \
             --cache-from type=local,src=/tmp/.buildx-cache \
             --cache-to type=local,dest=/tmp/.buildx-cache-new,mode=max \
+            --load \
             -t localhost:5000/habitpulse-api:latest ./server
 
       - name: Move cache
