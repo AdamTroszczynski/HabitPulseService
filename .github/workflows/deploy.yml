@@ -6,6 +6,7 @@ on:
       - preview
     paths:
       - 'server/**'
+      - 'docker-compose.prod.yml'
 
 jobs:
   deploy:
@@ -34,7 +35,7 @@ jobs:
           ssh -L 5000:localhost:5000 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} -N -f
           sleep 3
           docker push localhost:5000/habitpulse-api:latest
-          scp server/docker-compose.prod.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/projects/habitpulse-api/docker-compose.yml
+          scp docker-compose.prod.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/projects/habitpulse-api/docker-compose.yml
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} '
             cd /opt/projects/habitpulse-api &&
             docker pull localhost:5000/habitpulse-api:latest &&
