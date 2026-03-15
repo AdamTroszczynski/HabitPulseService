@@ -7,6 +7,7 @@ on:
     paths:
       - 'server/**'
       - 'docker-compose.prod.yml'
+      - '.github/workflows/deploy.yml'
 
 jobs:
   deploy:
@@ -28,7 +29,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build --no-cache -t localhost:5000/habitpulse-api:latest ./server
+          docker build -t localhost:5000/habitpulse-api:latest ./server
 
       - name: Push and Deploy
         run: |
