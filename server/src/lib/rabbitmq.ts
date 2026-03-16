@@ -1,5 +1,5 @@
 import amqplib, { type Channel, type ChannelModel } from 'amqplib';
-import { env } from '@/helpers/ConfigEnv.js';
+import { env } from '@/helpers/ConfigEnv';
 
 let connection: ChannelModel;
 let channel: Channel;

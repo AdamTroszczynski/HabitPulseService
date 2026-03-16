@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
-import type { AuthToken, AuthTokenDuration, AuthTokenType } from '@/types/auth.types.js';
-import { env } from '@/helpers/ConfigEnv.js';
-import { AppError } from '@/middlewares/ErrorHandler.js';
-import { ErrorCodes } from '@/enums/ErrorCodes.js';
-import { HttpStatus } from '@/enums/HttpStatus.js';
+import type { AuthToken, AuthTokenDuration, AuthTokenType } from '@/types/auth.types';
+import { env } from '@/helpers/ConfigEnv';
+import { AppError } from '@/middlewares/ErrorHandler';
+import { ErrorCodes } from '@/enums/ErrorCodes';
+import { HttpStatus } from '@/enums/HttpStatus';
 
 type GenerateAuthTokenDTO = {
   userId: number;

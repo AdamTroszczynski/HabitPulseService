@@ -3,9 +3,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import './helpers/LoadEnv.js';
-import { errorHandler } from '@/middlewares/ErrorHandler.js';
-import { AuthRouter } from './modules/Auth/AuthRoutes.js';
+import './helpers/LoadEnv';
+import { errorHandler } from '@/middlewares/ErrorHandler';
+import { AuthRouter } from './modules/Auth/AuthRoutes';
 
 const app = express();
 

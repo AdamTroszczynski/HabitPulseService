@@ -1,5 +1,5 @@
 import { createClient } from 'redis';
-import { env } from '@/helpers/ConfigEnv.js';
+import { env } from '@/helpers/ConfigEnv';
 
 const redisClient = createClient({ url: env.REDIS_URL });
 

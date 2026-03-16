@@ -5,7 +5,7 @@ import {
   getUserByEmail,
   getUserById,
   verifyUser,
-} from '@/repositories/User/UserRepository.js';
+} from '@/repositories/User/UserRepository';
 import {
   ActivateDTO,
   ChangePasswordDTO,
@@ -14,15 +14,15 @@ import {
   RegisterDTO,
   ResendActivationDTO,
   ResetPasswordDTO,
-} from '@/modules/Auth/AuthSchemas.js';
-import { AppError } from '@/middlewares/ErrorHandler.js';
-import { ErrorCodes } from '@/enums/ErrorCodes.js';
-import { HttpStatus } from '@/enums/HttpStatus.js';
-import { LoginServiceResult } from '@/modules/Auth/AuthService.types.js';
-import { generateAuthToken, verifyAuthToken } from '@/lib/jwt.js';
-import { env } from '@/helpers/ConfigEnv.js';
-import { getChannel } from '@/lib/rabbitmq.js';
-import redisClient from '@/lib/redis.js';
+} from '@/modules/Auth/AuthSchemas';
+import { AppError } from '@/middlewares/ErrorHandler';
+import { ErrorCodes } from '@/enums/ErrorCodes';
+import { HttpStatus } from '@/enums/HttpStatus';
+import { LoginServiceResult } from '@/modules/Auth/AuthService.types';
+import { generateAuthToken, verifyAuthToken } from '@/lib/jwt';
+import { env } from '@/helpers/ConfigEnv';
+import { getChannel } from '@/lib/rabbitmq';
+import redisClient from '@/lib/redis';
 
 export const loginService = async (dto: LoginDTO): Promise<LoginServiceResult> => {
   const user = await getUserByEmail({ email: dto.email });

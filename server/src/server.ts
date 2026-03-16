@@ -1,6 +1,6 @@
-import app from './app.js';
-import { connetRabbitMQ } from './lib/rabbitmq.js';
-import redisClient from './lib/redis.js';
+import app from './app';
+import { connetRabbitMQ } from './lib/rabbitmq';
+import redisClient from './lib/redis';
 
 const PORT = process.env.PORT || 3000;
 

@@ -1,7 +1,7 @@
 import { Response } from 'express';
-import { ApiResponse } from '@/types/api.types.js';
-import { ErrorCodes } from '@/enums/ErrorCodes.js';
-import { HttpStatus } from '@/enums/HttpStatus.js';
+import { ApiResponse } from '@/types/api.types';
+import { ErrorCodes } from '@/enums/ErrorCodes';
+import { HttpStatus } from '@/enums/HttpStatus';
 
 export const ok = <T>(res: Response, data: T, status: HttpStatus = HttpStatus.OK): void => {
   res.status(status).json({ success: true, data, error: null } satisfies ApiResponse<T>);
