@@ -7,6 +7,7 @@ on:
     paths:
       - 'server/**'
       - 'worker/**'
+      - 'tsconfig.base.json'
       - 'docker-compose.prod.yml'
       - '.github/workflows/deploy.yml'
 
@@ -31,15 +32,18 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -f server/Dockerfile -t localhost:5000/habitpulse-api:latest .
+          docker build -f worker/Dockerfile -t localhost:5000/habitpulse-worker:latest .
 
       - name: Push and Deploy
         run: |
           ssh -L 5000:localhost:5000 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} -N -f
           sleep 3
           docker push localhost:5000/habitpulse-api:latest
+          docker push localhost:5000/habitpulse-worker:latest
           scp docker-compose.prod.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/projects/habitpulse-api/docker-compose.yml
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} '
             cd /opt/projects/habitpulse-api &&
             docker pull localhost:5000/habitpulse-api:latest &&
+            docker pull localhost:5000/habitpulse-worker:latest &&
             docker compose up -d --pull never
           '
