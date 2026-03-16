@@ -1,9 +1,9 @@
 commit-msg:
   commands:
     commitlint:
-      run: server/node_modules/.bin/commitlint --config server/commitlint.config.js --edit {1}
+      run: node_modules/.bin/commitlint --edit {1}
 
 pre-commit:
   commands:
     lint-staged:
-      run: server/node_modules/.bin/lint-staged --config server/package.json
+      run: node_modules/.bin/lint-staged

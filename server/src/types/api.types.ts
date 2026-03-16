@@ -1,4 +1,4 @@
-import { ErrorCodes } from '@/enums/ErrorCodes';
+import { ErrorCodes } from '@/enums/ErrorCodes.js';
 
 type ApiResponseError = {
   code: ErrorCodes;

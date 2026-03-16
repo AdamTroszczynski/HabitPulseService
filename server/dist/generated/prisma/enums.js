@@ -7,5 +7,12 @@
 *
 * 🟢 You can import this file directly.
 */
-export {};
+export const Lang = {
+    PL: 'PL'
+};
+export const DateFormat = {
+    DD_MM_YYYY: 'DD_MM_YYYY',
+    MM_DD_YYYY: 'MM_DD_YYYY',
+    YYYY_MM_DD: 'YYYY_MM_DD'
+};
 //# sourceMappingURL=enums.js.map

@@ -13,6 +13,14 @@ services:
       - 'traefik.http.routers.habitpulse-api.tls.certresolver=letsencrypt'
       - 'traefik.http.services.habitpulse-api.loadbalancer.server.port=3000'
 
+  worker:
+    image: localhost:5000/habitpulse-worker:latest
+    restart: always
+    networks:
+      - shared-services
+    env_file:
+      - .env
+
 networks:
   traefik-public:
     external: true

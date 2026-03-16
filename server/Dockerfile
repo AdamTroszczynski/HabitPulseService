@@ -3,15 +3,18 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
-COPY src/prisma ./src/prisma/
-COPY prisma.config.ts ./
+COPY tsconfig.base.json ./
+COPY server/package*.json ./server/
+COPY server/src/prisma ./server/src/prisma/
+COPY server/prisma.config.ts ./server/
 
 RUN npm ci --ignore-scripts
-RUN npx prisma generate --schema=src/prisma/schema.prisma
+RUN npx prisma generate --schema=server/src/prisma/schema.prisma
 
-COPY . .
+COPY server/src ./server/src
+COPY server/tsconfig.json ./server/
 
-RUN npm run build
+RUN npm run build -w server
 
 # ---- runtime ----
 FROM node:22-alpine AS runner
@@ -19,13 +22,14 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 
 COPY package*.json ./
-COPY src/prisma ./src/prisma/
-COPY prisma.config.ts ./
+COPY server/package*.json ./server/
+COPY server/src/prisma ./server/src/prisma/
+COPY server/prisma.config.ts ./server/
 
 RUN npm ci --omit=dev --ignore-scripts
 
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/server/dist ./server/dist
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "npx prisma migrate deploy --config prisma.config.ts && node dist/src/server.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy --config server/prisma.config.ts && node server/dist/src/server.js"]

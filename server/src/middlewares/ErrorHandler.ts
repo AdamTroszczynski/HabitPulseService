@@ -1,8 +1,8 @@
 import { ZodError } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { fail } from '@/helpers/ResponsHelpers';
-import { ErrorCodes } from '@/enums/ErrorCodes';
-import { HttpStatus } from '@/enums/HttpStatus';
+import { fail } from '@/helpers/ResponsHelpers.js';
+import { ErrorCodes } from '@/enums/ErrorCodes.js';
+import { HttpStatus } from '@/enums/HttpStatus.js';
 
 export class AppError extends Error {
   constructor(

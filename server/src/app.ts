@@ -1,13 +1,11 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import { errorHandler } from '@/middlewares/ErrorHandler';
-import { AuthRouter } from './modules/Auth/AuthRoutes';
-
-dotenv.config();
+import './helpers/LoadEnv.js';
+import { errorHandler } from '@/middlewares/ErrorHandler.js';
+import { AuthRouter } from './modules/Auth/AuthRoutes.js';
 
 const app = express();
 

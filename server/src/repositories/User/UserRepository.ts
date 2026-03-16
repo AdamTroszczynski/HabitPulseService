@@ -1,12 +1,12 @@
-import { User } from 'generated/prisma/client';
-import prisma from '@/lib/prisma';
+import { User } from 'generated/prisma/client.js';
+import prisma from '@/lib/prisma.js';
 import {
   ChangeUserPasswordDTO,
   CreateUserDTO,
   GetUserByEmailDTO,
   GetUserByIdDTO,
   VerifyUserDTO,
-} from '@/repositories/User/UserRepository.types';
+} from '@/repositories/User/UserRepository.types.js';
 
 export const getUserById = async (dto: GetUserByIdDTO): Promise<User | null> => {
   return prisma.user.findUnique({ where: dto });

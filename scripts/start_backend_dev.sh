@@ -1,4 +1,4 @@
 #!/bin/bash
-echo "Starting backend services (without api)..."
+echo "Starting infrastructure..."
 cd "$(dirname "$0")/.."
 docker compose up

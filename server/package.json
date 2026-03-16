@@ -1,27 +1,18 @@
 {
+  "name": "@habitpulse/api",
   "main": "src/server.ts",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc --build tsconfig.json",
+    "build": "tsup src/server.ts --format esm --out-dir dist/src --tsconfig tsconfig.json",
     "preview": "npm run build && node dist/server.js",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
-    "format": "prettier --write \"./**/*.+(js|ts|cjs|mjs|json|md)\"",
-    "prepare": "lefthook install && node ../scripts/setup-hooks.js",
-    "lint-staged": "lint-staged",
+    "format": "prettier --write \"./**/*.+(js|ts|json|md)\"",
     "prisma:push": "prisma db push",
     "prisma:format": "prisma format",
     "prisma:generate": "prisma generate",
     "prisma:migrate:deploy": "prisma migrate deploy"
-  },
-  "lint-staged": {
-    "server/src/**/*.+(js|ts|cjs|mjs)": [
-      "server/node_modules/.bin/eslint --quiet --fix --config server/.eslintrc.cjs",
-      "server/node_modules/.bin/prettier --write --ignore-unknown"
-    ],
-    "server/src/**/*.+(json|md|html|vue)": [
-      "server/node_modules/.bin/prettier --write --ignore-unknown"
-    ]
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.5.0",
@@ -35,35 +26,18 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.1",
-    "nodemailer": "^8.0.2",
     "pg": "^8.20.0",
     "redis": "^5.11.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.4.4",
-    "@commitlint/config-conventional": "^20.4.4",
-    "@types/amqplib": "^0.10.8",
     "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
-    "@types/node": "^25.5.0",
     "@types/pg": "^8.18.0",
-    "@typescript-eslint/eslint-plugin": "^8.57.0",
-    "@typescript-eslint/parser": "^8.57.0",
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.5",
-    "lefthook": "^2.1.4",
-    "lint-staged": "^16.3.3",
-    "prettier": "^3.8.1",
-    "prisma": "^7.5.0",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "prisma": "^7.5.0"
   }
 }

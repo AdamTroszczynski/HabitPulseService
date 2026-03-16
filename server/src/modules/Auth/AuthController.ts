@@ -6,7 +6,7 @@ import {
   RegisterDTOSchema,
   ResendActivationDTOSchema,
   ResetPasswordDTOSchema,
-} from '@/modules/Auth/AuthSchemas';
+} from '@/modules/Auth/AuthSchemas.js';
 import {
   activateService,
   changePasswordService,
@@ -15,12 +15,12 @@ import {
   registerService,
   resendActivationService,
   resetPasswordService,
-} from '@/modules/Auth/AuthService';
-import { removeCookie, sendCookie } from '@/helpers/SendCookie';
-import { AUTH_TOKEN_NAME } from '@/const/CommonConst';
-import { fail, ok } from '@/helpers/ResponsHelpers';
-import { HttpStatus } from '@/enums/HttpStatus';
-import { ErrorCodes } from '@/enums/ErrorCodes';
+} from '@/modules/Auth/AuthService.js';
+import { removeCookie, sendCookie } from '@/helpers/SendCookie.js';
+import { AUTH_TOKEN_NAME } from '@/const/CommonConst.js';
+import { fail, ok } from '@/helpers/ResponsHelpers.js';
+import { HttpStatus } from '@/enums/HttpStatus.js';
+import { ErrorCodes } from '@/enums/ErrorCodes.js';
 
 export const loginController = async (req: Request, res: Response): Promise<void> => {
   const dto = LoginDTOSchema.parse(req.body);

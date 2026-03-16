@@ -6,6 +6,7 @@ on:
       - preview
     paths:
       - 'server/**'
+      - 'worker/**'
       - 'docker-compose.prod.yml'
       - '.github/workflows/deploy.yml'
 

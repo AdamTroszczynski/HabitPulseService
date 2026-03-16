@@ -7,7 +7,7 @@ import {
   registerController,
   resendActivationController,
   resetPasswordController,
-} from '@/modules/Auth/AuthController';
+} from '@/modules/Auth/AuthController.js';
 
 const AuthRouter = Router();
 

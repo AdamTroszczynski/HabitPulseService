@@ -1,4 +1,4 @@
 @echo off
-echo Starting backend services (without api)...
+echo Starting infrastructure...
 cd /d "%~dp0.."
-docker compose up
+start cmd /k "docker compose up"
