@@ -15,10 +15,11 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'production' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: ['prisma.config.ts', '**/*.test.ts'] }],
   },
   parserOptions: {
     ecmaVersion: 'latest',
