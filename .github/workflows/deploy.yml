@@ -30,7 +30,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t localhost:5000/habitpulse-api:latest ./server
+          docker build -t localhost:5000/habitpulse-api:latest .
 
       - name: Push and Deploy
         run: |
