@@ -5,6 +5,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.base.json ./
 COPY server/package*.json ./server/
+COPY server/tsconfig.json ./server/
 COPY server/src/prisma ./server/src/prisma/
 COPY server/prisma.config.ts ./server/
 
@@ -12,7 +13,6 @@ RUN npm ci --ignore-scripts
 RUN npx prisma generate --schema=server/src/prisma/schema.prisma
 
 COPY server/src ./server/src
-COPY server/tsconfig.json ./server/
 
 RUN npm run build -w server
 
