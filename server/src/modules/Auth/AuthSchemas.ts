@@ -4,6 +4,7 @@ export const LoginDTOSchema = z.object({
   email: z.email().nonempty(),
   password: z.string().min(6),
   rememberMe: z.boolean(),
+  token: z.string().optional().nullable(),
 });
 
 export const LogoutDTOSchema = z.object({

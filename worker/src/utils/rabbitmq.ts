@@ -4,7 +4,7 @@ import { env } from '@/helpers/ConfigEnv';
 let connection: ChannelModel;
 let channel: Channel;
 
-export const connetRabbitMQ = async (): Promise<void> => {
+export const connectRabbitMQ = async (): Promise<void> => {
   connection = await amqplib.connect(env.RABBITMQ_URL, { vhost: env.RABBITMQ_VHOST });
   channel = await connection.createChannel();
 

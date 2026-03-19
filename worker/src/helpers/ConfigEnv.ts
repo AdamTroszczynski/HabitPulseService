@@ -10,5 +10,9 @@ const optionalEnv = (key: string, defaultValue: string): string => {
 
 export const env = {
   RABBITMQ_URL: requireEnv('RABBITMQ_URL'),
+  MAIL_EMAIL: requireEnv('MAIL_EMAIL'),
+  MAIL_PASSWORD: requireEnv('MAIL_PASSWORD'),
+  MAIL_HOST: requireEnv('MAIL_HOST'),
+  MAIL_PORT: requireEnv('MAIL_PORT'),
   RABBITMQ_VHOST: optionalEnv('RABBITMQ_VHOST', '/'),
 };

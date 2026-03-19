@@ -24,8 +24,9 @@ import { ErrorCodes } from '@/enums/ErrorCodes';
 
 export const loginController = async (req: Request, res: Response): Promise<void> => {
   const dto = LoginDTOSchema.parse(req.body);
+  const authToken = req.cookies[AUTH_TOKEN_NAME];
 
-  const data = await loginService(dto);
+  const data = await loginService({ ...dto, token: authToken });
 
   sendCookie(res, AUTH_TOKEN_NAME, data.token, dto.rememberMe);
 

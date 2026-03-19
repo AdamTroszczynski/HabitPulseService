@@ -25,6 +25,10 @@ import { getChannel } from '@/lib/rabbitmq';
 import redisClient from '@/lib/redis';
 
 export const loginService = async (dto: LoginDTO): Promise<LoginServiceResult> => {
+  if (dto.token) {
+    const isLogged = verifyAuthToken(dto.token);
+    if (isLogged) throw new AppError(ErrorCodes.FORBIDDEN, 'User is already logged', HttpStatus.FORBIDDEN);
+  }
   const user = await getUserByEmail({ email: dto.email });
   if (!user) throw new AppError(ErrorCodes.UNAUTHORIZED, 'Invalid credentials', HttpStatus.UNAUTHORIZED);
 
@@ -53,7 +57,7 @@ export const registerService = async (dto: RegisterDTO): Promise<void> => {
   const newUser = await createUser({ email: dto.email, passwordHash, name: dto.email });
   const token = generateAuthToken({ userId: newUser.id, duration: 'long', type: 'activation' });
   getChannel().publish(
-    'habitpulse.messages',
+    'habitpulse.auth',
     'email',
     Buffer.from(JSON.stringify({ type: 'activation', email: newUser.email, token })),
     { persistent: true },
@@ -79,7 +83,7 @@ export const resendActivationService = async (dto: ResendActivationDTO): Promise
 
   const token = generateAuthToken({ userId: user.id, duration: 'long', type: 'activation' });
   getChannel().publish(
-    'habitpulse.messages',
+    'habitpulse.auth',
     'email',
     Buffer.from(JSON.stringify({ type: 'activation', email: user.email, token })),
     { persistent: true },
@@ -92,7 +96,7 @@ export const resetPasswordService = async (dto: ResetPasswordDTO): Promise<void>
 
   const token = generateAuthToken({ userId: user.id, duration: 'short', type: 'resetPassword' });
   getChannel().publish(
-    'habitpulse.messages',
+    'habitpulse.auth',
     'email',
     Buffer.from(JSON.stringify({ type: 'resetPassword', email: user.email, token })),
     { persistent: true },
