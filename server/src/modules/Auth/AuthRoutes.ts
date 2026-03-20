@@ -9,14 +9,14 @@ import {
   resetPasswordController,
 } from '@/modules/Auth/AuthController';
 
-const AuthRouter = Router();
+const authRouter = Router();
 
-AuthRouter.post('/login', loginController);
-AuthRouter.post('/logout', logoutController);
-AuthRouter.post('/register', registerController);
-AuthRouter.post('/active', activeController);
-AuthRouter.post('/resend-activation', resendActivationController);
-AuthRouter.post('/reset-password', resetPasswordController);
-AuthRouter.patch('/change-password', changePasswordController);
+authRouter.post('/login', loginController);
+authRouter.post('/logout', logoutController);
+authRouter.post('/register', registerController);
+authRouter.post('/active', activeController);
+authRouter.post('/resend-activation', resendActivationController);
+authRouter.post('/reset-password', resetPasswordController);
+authRouter.patch('/change-password', changePasswordController);
 
-export { AuthRouter };
+export { authRouter };
