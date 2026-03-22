@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { User } from '@prisma/client';
 import {
   ActivateDTOSchema,
   ChangePasswordDTOSchema,
@@ -30,7 +31,7 @@ export const loginController = async (req: Request, res: Response): Promise<void
 
   sendCookie(res, AUTH_TOKEN_NAME, data.token, dto.rememberMe);
 
-  ok(res, data);
+  ok<User>(res, data.user);
 };
 
 export const logoutController = async (req: Request, res: Response): Promise<void> => {

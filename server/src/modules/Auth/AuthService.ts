@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+import redisClient from '@shared/lib/redis';
+import { env } from '@shared/helpers/ConfigEnv';
 import {
   changeUserPassword,
   createUser,
@@ -20,9 +22,8 @@ import { ErrorCodes } from '@/enums/ErrorCodes';
 import { HttpStatus } from '@/enums/HttpStatus';
 import { LoginServiceResult } from '@/modules/Auth/AuthService.types';
 import { generateAuthToken, verifyAuthToken } from '@/lib/jwt';
-import { env } from '@/helpers/ConfigEnv';
-import { getChannel } from '@/lib/rabbitmq';
-import redisClient from '@/lib/redis';
+import { AUTH_TOKEN_DURATION, AUTH_TOKEN_TYPE } from '@/types/auth.types';
+import { sendToAuthQueue } from '@/helpers/SendToQueue';
 
 export const loginService = async (dto: LoginDTO): Promise<LoginServiceResult> => {
   if (dto.token) {
@@ -35,7 +36,11 @@ export const loginService = async (dto: LoginDTO): Promise<LoginServiceResult> =
   const isPasswordMatch = await bcrypt.compare(dto.password, user.passwordHash);
   if (!isPasswordMatch) throw new AppError(ErrorCodes.UNAUTHORIZED, 'Invalid credentials', HttpStatus.UNAUTHORIZED);
 
-  const token = generateAuthToken({ userId: user.id, duration: dto.rememberMe ? 'long' : 'short', type: 'auth' });
+  const token = generateAuthToken({
+    userId: user.id,
+    duration: dto.rememberMe ? AUTH_TOKEN_DURATION.LONG : AUTH_TOKEN_DURATION.SHORT,
+    type: AUTH_TOKEN_TYPE.AUTH,
+  });
   return { user, token };
 };
 
@@ -55,18 +60,18 @@ export const registerService = async (dto: RegisterDTO): Promise<void> => {
   const passwordHash = await bcrypt.hash(dto.password, env.BCRYPT_ROUNDS);
 
   const newUser = await createUser({ email: dto.email, passwordHash, name: dto.email });
-  const token = generateAuthToken({ userId: newUser.id, duration: 'long', type: 'activation' });
-  getChannel().publish(
-    'habitpulse.auth',
-    'email',
-    Buffer.from(JSON.stringify({ type: 'activation', email: newUser.email, token })),
-    { persistent: true },
-  );
+  const token = generateAuthToken({
+    userId: newUser.id,
+    duration: AUTH_TOKEN_DURATION.LONG,
+    type: AUTH_TOKEN_TYPE.ACTIVATION,
+  });
+
+  sendToAuthQueue.sendActivationEmail({ email: newUser.email, token });
 };
 
 export const activateService = async (dto: ActivateDTO): Promise<void> => {
   const authToken = verifyAuthToken(dto.token);
-  if (authToken.type !== 'activation')
+  if (authToken.type !== AUTH_TOKEN_TYPE.ACTIVATION)
     throw new AppError(ErrorCodes.UNAUTHORIZED, 'Invalid credentials', HttpStatus.UNAUTHORIZED);
 
   const user = await getUserById({ id: authToken.userId });
@@ -81,31 +86,29 @@ export const resendActivationService = async (dto: ResendActivationDTO): Promise
   if (!user) throw new AppError(ErrorCodes.NOT_FOUND, 'User does not exist', HttpStatus.NOT_FOUND);
   if (user.isVerified) throw new AppError(ErrorCodes.CONFLICT, 'User is already verified', HttpStatus.CONFLICT);
 
-  const token = generateAuthToken({ userId: user.id, duration: 'long', type: 'activation' });
-  getChannel().publish(
-    'habitpulse.auth',
-    'email',
-    Buffer.from(JSON.stringify({ type: 'activation', email: user.email, token })),
-    { persistent: true },
-  );
+  const token = generateAuthToken({
+    userId: user.id,
+    duration: AUTH_TOKEN_DURATION.LONG,
+    type: AUTH_TOKEN_TYPE.ACTIVATION,
+  });
+  sendToAuthQueue.sendActivationEmail({ email: user.email, token });
 };
 
 export const resetPasswordService = async (dto: ResetPasswordDTO): Promise<void> => {
   const user = await getUserByEmail({ email: dto.email });
   if (!user) throw new AppError(ErrorCodes.UNAUTHORIZED, 'Invalid credentials', HttpStatus.UNAUTHORIZED);
 
-  const token = generateAuthToken({ userId: user.id, duration: 'short', type: 'resetPassword' });
-  getChannel().publish(
-    'habitpulse.auth',
-    'email',
-    Buffer.from(JSON.stringify({ type: 'resetPassword', email: user.email, token })),
-    { persistent: true },
-  );
+  const token = generateAuthToken({
+    userId: user.id,
+    duration: AUTH_TOKEN_DURATION.SHORT,
+    type: AUTH_TOKEN_TYPE.RESET_PASSWORD,
+  });
+  sendToAuthQueue.sendResetPasswordEmail({ email: user.email, token });
 };
 
 export const changePasswordService = async (dto: ChangePasswordDTO): Promise<void> => {
   const authToken = verifyAuthToken(dto.token);
-  if (authToken.type !== 'resetPassword')
+  if (authToken.type !== AUTH_TOKEN_TYPE.RESET_PASSWORD)
     throw new AppError(ErrorCodes.UNAUTHORIZED, 'Invalid credentials', HttpStatus.UNAUTHORIZED);
 
   const user = await getUserById({ id: authToken.userId });

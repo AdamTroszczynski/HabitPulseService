@@ -1,5 +1,6 @@
 import amqplib, { type Channel, type ChannelModel } from 'amqplib';
-import { env } from '@/helpers/ConfigEnv';
+import { env } from '@shared/helpers/ConfigEnv';
+import { logger } from '@shared/lib/logger';
 
 let connection: ChannelModel;
 let channel: Channel;
@@ -12,7 +13,7 @@ export const connectRabbitMQ = async (): Promise<void> => {
   await channel.assertQueue('auth.email', { durable: true });
   await channel.bindQueue('auth.email', 'habitpulse.auth', 'email');
 
-  console.log('RabbitMQ connected');
+  logger.info('RabbitMQ connected');
 };
 
 export const getChannel = (): Channel => {

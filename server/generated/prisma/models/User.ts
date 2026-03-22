@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model User
@@ -28,12 +28,10 @@ export type AggregateUser = {
 
 export type UserAvgAggregateOutputType = {
   id: number | null
-  failedLoginAttempts: number | null
 }
 
 export type UserSumAggregateOutputType = {
   id: number | null
-  failedLoginAttempts: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -41,9 +39,10 @@ export type UserMinAggregateOutputType = {
   email: string | null
   passwordHash: string | null
   name: string | null
+  secretBase32: string | null
+  totpEnabled: boolean | null
   dateFormat: $Enums.DateFormat | null
   lang: $Enums.Lang | null
-  failedLoginAttempts: number | null
   isVerified: boolean | null
   lastLogin: Date | null
   createdAt: Date | null
@@ -55,9 +54,10 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   passwordHash: string | null
   name: string | null
+  secretBase32: string | null
+  totpEnabled: boolean | null
   dateFormat: $Enums.DateFormat | null
   lang: $Enums.Lang | null
-  failedLoginAttempts: number | null
   isVerified: boolean | null
   lastLogin: Date | null
   createdAt: Date | null
@@ -69,9 +69,10 @@ export type UserCountAggregateOutputType = {
   email: number
   passwordHash: number
   name: number
+  secretBase32: number
+  totpEnabled: number
   dateFormat: number
   lang: number
-  failedLoginAttempts: number
   isVerified: number
   lastLogin: number
   createdAt: number
@@ -82,12 +83,10 @@ export type UserCountAggregateOutputType = {
 
 export type UserAvgAggregateInputType = {
   id?: true
-  failedLoginAttempts?: true
 }
 
 export type UserSumAggregateInputType = {
   id?: true
-  failedLoginAttempts?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -95,9 +94,10 @@ export type UserMinAggregateInputType = {
   email?: true
   passwordHash?: true
   name?: true
+  secretBase32?: true
+  totpEnabled?: true
   dateFormat?: true
   lang?: true
-  failedLoginAttempts?: true
   isVerified?: true
   lastLogin?: true
   createdAt?: true
@@ -109,9 +109,10 @@ export type UserMaxAggregateInputType = {
   email?: true
   passwordHash?: true
   name?: true
+  secretBase32?: true
+  totpEnabled?: true
   dateFormat?: true
   lang?: true
-  failedLoginAttempts?: true
   isVerified?: true
   lastLogin?: true
   createdAt?: true
@@ -123,9 +124,10 @@ export type UserCountAggregateInputType = {
   email?: true
   passwordHash?: true
   name?: true
+  secretBase32?: true
+  totpEnabled?: true
   dateFormat?: true
   lang?: true
-  failedLoginAttempts?: true
   isVerified?: true
   lastLogin?: true
   createdAt?: true
@@ -224,9 +226,10 @@ export type UserGroupByOutputType = {
   email: string
   passwordHash: string
   name: string
+  secretBase32: string | null
+  totpEnabled: boolean
   dateFormat: $Enums.DateFormat
   lang: $Enums.Lang
-  failedLoginAttempts: number
   isVerified: boolean
   lastLogin: Date | null
   createdAt: Date
@@ -261,9 +264,10 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
+  secretBase32?: Prisma.StringNullableFilter<"User"> | string | null
+  totpEnabled?: Prisma.BoolFilter<"User"> | boolean
   dateFormat?: Prisma.EnumDateFormatFilter<"User"> | $Enums.DateFormat
   lang?: Prisma.EnumLangFilter<"User"> | $Enums.Lang
-  failedLoginAttempts?: Prisma.IntFilter<"User"> | number
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   lastLogin?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -276,9 +280,10 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  secretBase32?: Prisma.SortOrderInput | Prisma.SortOrder
+  totpEnabled?: Prisma.SortOrder
   dateFormat?: Prisma.SortOrder
   lang?: Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   lastLogin?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -294,9 +299,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   passwordHash?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
+  secretBase32?: Prisma.StringNullableFilter<"User"> | string | null
+  totpEnabled?: Prisma.BoolFilter<"User"> | boolean
   dateFormat?: Prisma.EnumDateFormatFilter<"User"> | $Enums.DateFormat
   lang?: Prisma.EnumLangFilter<"User"> | $Enums.Lang
-  failedLoginAttempts?: Prisma.IntFilter<"User"> | number
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   lastLogin?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -309,9 +315,10 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  secretBase32?: Prisma.SortOrderInput | Prisma.SortOrder
+  totpEnabled?: Prisma.SortOrder
   dateFormat?: Prisma.SortOrder
   lang?: Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   lastLogin?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -331,9 +338,10 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
+  secretBase32?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  totpEnabled?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   dateFormat?: Prisma.EnumDateFormatWithAggregatesFilter<"User"> | $Enums.DateFormat
   lang?: Prisma.EnumLangWithAggregatesFilter<"User"> | $Enums.Lang
-  failedLoginAttempts?: Prisma.IntWithAggregatesFilter<"User"> | number
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   lastLogin?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -344,9 +352,10 @@ export type UserCreateInput = {
   email: string
   passwordHash: string
   name: string
+  secretBase32?: string | null
+  totpEnabled?: boolean
   dateFormat?: $Enums.DateFormat
   lang?: $Enums.Lang
-  failedLoginAttempts?: number
   isVerified?: boolean
   lastLogin?: Date | string | null
   createdAt?: Date | string
@@ -359,9 +368,10 @@ export type UserUncheckedCreateInput = {
   email: string
   passwordHash: string
   name: string
+  secretBase32?: string | null
+  totpEnabled?: boolean
   dateFormat?: $Enums.DateFormat
   lang?: $Enums.Lang
-  failedLoginAttempts?: number
   isVerified?: boolean
   lastLogin?: Date | string | null
   createdAt?: Date | string
@@ -373,9 +383,10 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -388,9 +399,10 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -403,9 +415,10 @@ export type UserCreateManyInput = {
   email: string
   passwordHash: string
   name: string
+  secretBase32?: string | null
+  totpEnabled?: boolean
   dateFormat?: $Enums.DateFormat
   lang?: $Enums.Lang
-  failedLoginAttempts?: number
   isVerified?: boolean
   lastLogin?: Date | string | null
   createdAt?: Date | string
@@ -416,9 +429,10 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -430,9 +444,10 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -444,9 +459,10 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  secretBase32?: Prisma.SortOrder
+  totpEnabled?: Prisma.SortOrder
   dateFormat?: Prisma.SortOrder
   lang?: Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   lastLogin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -455,7 +471,6 @@ export type UserCountOrderByAggregateInput = {
 
 export type UserAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -463,9 +478,10 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  secretBase32?: Prisma.SortOrder
+  totpEnabled?: Prisma.SortOrder
   dateFormat?: Prisma.SortOrder
   lang?: Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   lastLogin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -477,9 +493,10 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  secretBase32?: Prisma.SortOrder
+  totpEnabled?: Prisma.SortOrder
   dateFormat?: Prisma.SortOrder
   lang?: Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   lastLogin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -488,7 +505,6 @@ export type UserMinOrderByAggregateInput = {
 
 export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -500,6 +516,14 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type EnumDateFormatFieldUpdateOperationsInput = {
   set?: $Enums.DateFormat
 }
@@ -508,24 +532,20 @@ export type EnumLangFieldUpdateOperationsInput = {
   set?: $Enums.Lang
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type UserCreateNestedOneWithoutHabitsInput = {
@@ -546,9 +566,10 @@ export type UserCreateWithoutHabitsInput = {
   email: string
   passwordHash: string
   name: string
+  secretBase32?: string | null
+  totpEnabled?: boolean
   dateFormat?: $Enums.DateFormat
   lang?: $Enums.Lang
-  failedLoginAttempts?: number
   isVerified?: boolean
   lastLogin?: Date | string | null
   createdAt?: Date | string
@@ -560,9 +581,10 @@ export type UserUncheckedCreateWithoutHabitsInput = {
   email: string
   passwordHash: string
   name: string
+  secretBase32?: string | null
+  totpEnabled?: boolean
   dateFormat?: $Enums.DateFormat
   lang?: $Enums.Lang
-  failedLoginAttempts?: number
   isVerified?: boolean
   lastLogin?: Date | string | null
   createdAt?: Date | string
@@ -589,9 +611,10 @@ export type UserUpdateWithoutHabitsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -603,9 +626,10 @@ export type UserUncheckedUpdateWithoutHabitsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -648,9 +672,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   passwordHash?: boolean
   name?: boolean
+  secretBase32?: boolean
+  totpEnabled?: boolean
   dateFormat?: boolean
   lang?: boolean
-  failedLoginAttempts?: boolean
   isVerified?: boolean
   lastLogin?: boolean
   createdAt?: boolean
@@ -664,9 +689,10 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   passwordHash?: boolean
   name?: boolean
+  secretBase32?: boolean
+  totpEnabled?: boolean
   dateFormat?: boolean
   lang?: boolean
-  failedLoginAttempts?: boolean
   isVerified?: boolean
   lastLogin?: boolean
   createdAt?: boolean
@@ -678,9 +704,10 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   passwordHash?: boolean
   name?: boolean
+  secretBase32?: boolean
+  totpEnabled?: boolean
   dateFormat?: boolean
   lang?: boolean
-  failedLoginAttempts?: boolean
   isVerified?: boolean
   lastLogin?: boolean
   createdAt?: boolean
@@ -692,16 +719,17 @@ export type UserSelectScalar = {
   email?: boolean
   passwordHash?: boolean
   name?: boolean
+  secretBase32?: boolean
+  totpEnabled?: boolean
   dateFormat?: boolean
   lang?: boolean
-  failedLoginAttempts?: boolean
   isVerified?: boolean
   lastLogin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "dateFormat" | "lang" | "failedLoginAttempts" | "isVerified" | "lastLogin" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "secretBase32" | "totpEnabled" | "dateFormat" | "lang" | "isVerified" | "lastLogin" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   habits?: boolean | Prisma.User$habitsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -719,9 +747,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     passwordHash: string
     name: string
+    secretBase32: string | null
+    totpEnabled: boolean
     dateFormat: $Enums.DateFormat
     lang: $Enums.Lang
-    failedLoginAttempts: number
     isVerified: boolean
     lastLogin: Date | null
     createdAt: Date
@@ -1154,9 +1183,10 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
+  readonly secretBase32: Prisma.FieldRef<"User", 'String'>
+  readonly totpEnabled: Prisma.FieldRef<"User", 'Boolean'>
   readonly dateFormat: Prisma.FieldRef<"User", 'DateFormat'>
   readonly lang: Prisma.FieldRef<"User", 'Lang'>
-  readonly failedLoginAttempts: Prisma.FieldRef<"User", 'Int'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly lastLogin: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>

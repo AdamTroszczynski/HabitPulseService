@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import type { AuthToken, AuthTokenDuration, AuthTokenType } from '@/types/auth.types';
-import { env } from '@/helpers/ConfigEnv';
+import { env } from '@shared/helpers/ConfigEnv';
+import { AUTH_TOKEN_DURATION, type AuthToken, type AuthTokenDuration, type AuthTokenType } from '@/types/auth.types';
 import { AppError } from '@/middlewares/ErrorHandler';
 import { ErrorCodes } from '@/enums/ErrorCodes';
 import { HttpStatus } from '@/enums/HttpStatus';
@@ -20,7 +20,7 @@ export const generateAuthToken = (dto: GenerateAuthTokenDTO): string => {
     iat: Date.now(),
   };
   const authToken = jwt.sign(payload, env.JWT_SECRET, {
-    expiresIn: dto.duration === 'long' ? '30d' : '15m',
+    expiresIn: dto.duration === AUTH_TOKEN_DURATION.LONG ? '30d' : '15m',
   });
 
   return authToken;

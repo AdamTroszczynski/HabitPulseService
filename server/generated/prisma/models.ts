@@ -8,8 +8,9 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User.js'
-export type * from './models/Habit.js'
-export type * from './models/Reminder.js'
-export type * from './models/Tracking.js'
-export type * from './commonInputTypes.js'
+export type * from './models/User'
+export type * from './models/Habit'
+export type * from './models/Reminder'
+export type * from './models/ReminderTask'
+export type * from './models/Tracking'
+export type * from './commonInputTypes'

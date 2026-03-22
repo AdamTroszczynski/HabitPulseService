@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "workspaces": [
     "server",
-    "worker"
+    "worker",
+    "shared"
   ],
+  "type": "module",
   "private": true,
   "scripts": {
     "dev:server": "npm run dev -w server",
@@ -22,6 +24,10 @@
       "eslint --quiet --fix",
       "prettier --write --ignore-unknown"
     ]
+  },
+  "dependencies": {
+    "amqplib": "^0.10.9",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.4",

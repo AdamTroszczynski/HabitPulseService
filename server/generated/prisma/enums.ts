@@ -23,3 +23,13 @@ export const DateFormat = {
 } as const
 
 export type DateFormat = (typeof DateFormat)[keyof typeof DateFormat]
+
+
+export const ReminderTaskStatus = {
+  PENDING: 'PENDING',
+  SENT: 'SENT',
+  CANCELLED: 'CANCELLED',
+  FAILED: 'FAILED'
+} as const
+
+export type ReminderTaskStatus = (typeof ReminderTaskStatus)[keyof typeof ReminderTaskStatus]

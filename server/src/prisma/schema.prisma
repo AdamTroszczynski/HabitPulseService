@@ -17,19 +17,27 @@ enum DateFormat {
   YYYY_MM_DD @map("yyyy-mm-dd")
 }
 
+enum ReminderTaskStatus {
+  PENDING
+  SENT
+  CANCELLED
+  FAILED
+}
+
 model User {
-  id                  Int        @id @default(autoincrement())
-  email               String     @unique @db.VarChar(255)
-  passwordHash        String     @map("password_hash")
-  name                String     @db.VarChar(40)
-  dateFormat          DateFormat @default(DD_MM_YYYY) @map("date_format")
-  lang                Lang       @default(PL)
-  failedLoginAttempts Int        @default(0) @map("failed_login_attempts")
-  habits              Habit[]
-  isVerified          Boolean    @default(false) @map("is_verified")
-  lastLogin           DateTime?  @map("last_login")
-  createdAt           DateTime   @default(now()) @map("created_at")
-  updatedAt           DateTime   @updatedAt @map("updated_at")
+  id           Int        @id @default(autoincrement())
+  email        String     @unique @db.VarChar(255)
+  passwordHash String     @map("password_hash")
+  name         String     @db.VarChar(40)
+  secretBase32 String?    @map("secret_base32")
+  totpEnabled  Boolean    @default(false) @map("totp-enabled")
+  dateFormat   DateFormat @default(DD_MM_YYYY) @map("date_format")
+  lang         Lang       @default(PL)
+  habits       Habit[]
+  isVerified   Boolean    @default(false) @map("is_verified")
+  lastLogin    DateTime?  @map("last_login")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
 
   @@map("users")
 }
@@ -53,20 +61,31 @@ model Habit {
 }
 
 model Reminder {
-  id               Int       @id @default(autoincrement())
-  habitId          Int       @unique @map("habit_id")
-  habit            Habit     @relation(fields: [habitId], references: [id])
-  isReminderActive Boolean   @default(false) @map("is_reminder_active")
-  preferredTime    String    @default("12:00") @map("preferred_time")
-  frequency        String[]  @default([])
-  jobId            String?   @map("job_id")
-  nextScheduledAt  DateTime? @map("next_scheduled_at")
-  lastSentAt       DateTime? @map("last_sent_at")
-  reminderVersion  Int       @default(0) @map("reminder_version")
-  createdAt        DateTime  @default(now()) @map("created_at")
-  updatedAt        DateTime  @updatedAt @map("updated_at")
+  id               Int            @id @default(autoincrement())
+  habitId          Int            @unique @map("habit_id")
+  habit            Habit          @relation(fields: [habitId], references: [id])
+  isReminderActive Boolean        @default(false) @map("is_reminder_active")
+  preferredTime    String         @default("12:00") @map("preferred_time")
+  frequency        String[]       @default([])
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
+  reminderTasks    ReminderTask[]
 
   @@map("reminders")
+}
+
+model ReminderTask {
+  id           Int                @id @default(autoincrement())
+  reminderId   Int                @map("reminder_id")
+  reminder     Reminder           @relation(fields: [reminderId], references: [id])
+  jobId        String?            @unique @map("job_id")
+  scheduledFor DateTime           @map("scheduled_for")
+  status       ReminderTaskStatus @default(PENDING)
+  sentAt       DateTime?          @map("sent_at")
+  cancelledAt  DateTime?          @map("cancelled_at")
+  failReason   String?            @map("fail_reason")
+  createdAt    DateTime           @default(now()) @map("created_at")
+  updatedAt    DateTime           @updatedAt @map("updated_at")
 }
 
 model Tracking {

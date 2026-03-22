@@ -1,6 +1,6 @@
+import { env } from '@shared/helpers/ConfigEnv';
 import { mailer } from '@/utils/nodemail';
 import { SendActivationEmailDTO, SendResetPasswordEmailDTO } from '@/modules/Auth/authEmails.types';
-import { env } from '@/helpers/ConfigEnv';
 
 export const sendActivationEmail = async (dto: SendActivationEmailDTO): Promise<void> => {
   const info = await mailer.sendMail({

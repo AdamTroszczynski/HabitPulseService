@@ -17,6 +17,16 @@ export type ChangeUserPasswordDTO = {
   passwordHash: string;
 };
 
+export type EnableUserTotpDTO = {
+  id: number;
+  isEnabled: boolean;
+};
+
+export type ChangeUserTotpSecretDTO = {
+  id: number;
+  secret: string;
+};
+
 export type VerifyUserDTO = {
   id: number;
 };

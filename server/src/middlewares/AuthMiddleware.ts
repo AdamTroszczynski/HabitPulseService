@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
+import redisClient from '@shared/lib/redis';
 import { AUTH_TOKEN_NAME } from '@/const/CommonConst';
 import { ErrorCodes } from '@/enums/ErrorCodes';
 import { HttpStatus } from '@/enums/HttpStatus';
 import { generateAuthToken, verifyAuthToken } from '@/lib/jwt';
-import redisClient from '@/lib/redis';
 import { removeCookie, sendCookie } from '@/helpers/SendCookie';
 import { AppError } from '@/middlewares/ErrorHandler';
 
@@ -26,7 +26,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
       const newToken = generateAuthToken({ type: 'auth', duration: 'short', userId: authTokenPayload.userId });
       sendCookie(res, AUTH_TOKEN_NAME, newToken, false);
     }
-
+    req.userId = authTokenPayload.userId;
     next();
   } catch (err) {
     next(err);

@@ -1,17 +1,27 @@
-import './helpers/LoadEnv';
-import { connectRabbitMQ, getChannel } from '@/utils/rabbitmq';
+import { connectRabbitMQ, getChannel } from '@shared/lib/rabbitmq';
+import { QUEUES } from '@shared/types/queue.types';
+import { logger } from '@shared/lib/logger';
 import { authEmailController } from '@/modules/Auth/authController';
+import { consumeWithContext } from './helpers/AsyncStore';
 
 const startWorker = async () => {
   const channel = getChannel();
 
   channel.prefetch(1);
 
-  channel.consume('auth.email', async (msg) => {
+  consumeWithContext(channel, QUEUES.AUTH_EMAIL, async (msg) => {
+    const raw = JSON.parse(msg.content.toString());
+    logger.info(
+      {
+        queue: QUEUES.AUTH_EMAIL,
+        type: raw?.type,
+      },
+      'Task received',
+    );
     await authEmailController(msg, channel);
-    console.log('Auth Email catched');
   });
-  console.log('Worker listing on queue...');
+
+  logger.info('Worker listing on queue...');
 };
 
 const startApp = async () => {
@@ -19,7 +29,7 @@ const startApp = async () => {
     await connectRabbitMQ();
     await startWorker();
   } catch (err) {
-    console.error('Failed to start worker:', err);
+    logger.fatal({ err }, 'Failed to start worker:');
     process.exit(1);
   }
 };

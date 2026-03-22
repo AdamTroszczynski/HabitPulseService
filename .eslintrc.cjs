@@ -19,7 +19,13 @@ module.exports = {
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: ['prisma.config.ts', '**/*.test.ts'] }],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: ['prisma.config.ts', '**/*.test.ts'],
+        packageDir: ['.', './server', './worker'],
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 'latest',

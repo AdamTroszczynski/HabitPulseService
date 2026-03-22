@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.js'
-export type * from './prismaNamespace.js'
+export type * from '../models'
+export type * from './prismaNamespace'
 
 export const Decimal = runtime.Decimal
 
@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   Habit: 'Habit',
   Reminder: 'Reminder',
+  ReminderTask: 'ReminderTask',
   Tracking: 'Tracking'
 } as const
 
@@ -78,9 +79,10 @@ export const UserScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   name: 'name',
+  secretBase32: 'secretBase32',
+  totpEnabled: 'totpEnabled',
   dateFormat: 'dateFormat',
   lang: 'lang',
-  failedLoginAttempts: 'failedLoginAttempts',
   isVerified: 'isVerified',
   lastLogin: 'lastLogin',
   createdAt: 'createdAt',
@@ -112,15 +114,27 @@ export const ReminderScalarFieldEnum = {
   isReminderActive: 'isReminderActive',
   preferredTime: 'preferredTime',
   frequency: 'frequency',
-  jobId: 'jobId',
-  nextScheduledAt: 'nextScheduledAt',
-  lastSentAt: 'lastSentAt',
-  reminderVersion: 'reminderVersion',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ReminderScalarFieldEnum = (typeof ReminderScalarFieldEnum)[keyof typeof ReminderScalarFieldEnum]
+
+
+export const ReminderTaskScalarFieldEnum = {
+  id: 'id',
+  reminderId: 'reminderId',
+  jobId: 'jobId',
+  scheduledFor: 'scheduledFor',
+  status: 'status',
+  sentAt: 'sentAt',
+  cancelledAt: 'cancelledAt',
+  failReason: 'failReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReminderTaskScalarFieldEnum = (typeof ReminderTaskScalarFieldEnum)[keyof typeof ReminderTaskScalarFieldEnum]
 
 
 export const TrackingScalarFieldEnum = {

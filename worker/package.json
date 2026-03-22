@@ -1,11 +1,11 @@
 {
-  "name": "worker",
+  "name": "@habitpulse/worker",
   "version": "1.0.0",
   "description": "",
   "main": "src/worker.ts",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/worker.ts",
+    "dev": "tsx watch --env-file=../.env src/worker.ts",
     "build": "tsup src/worker.ts --format esm --out-dir dist/src --tsconfig tsconfig.json",
     "preview": "npm run build && node dist/worker.js",
     "lint": "eslint . --ext .ts,.js",
@@ -15,10 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "amqplib": "^0.10.9",
-    "dotenv": "^17.3.1",
-    "nodemailer": "^8.0.2",
-    "zod": "^4.3.6"
+    "nodemailer": "^8.0.2"
   },
   "devDependencies": {
     "@types/nodemailer": "^7.0.11"

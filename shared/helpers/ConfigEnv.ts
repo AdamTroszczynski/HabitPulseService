@@ -9,10 +9,17 @@ const optionalEnv = (key: string, defaultValue: string): string => {
 };
 
 export const env = {
+  JWT_SECRET: requireEnv('JWT_SECRET'),
+  BCRYPT_ROUNDS: Number(requireEnv('BCRYPT_ROUNDS')),
+  DATABASE_URL: requireEnv('DATABASE_URL'),
+  NODE_ENV: requireEnv('NODE_ENV'),
+
+  REDIS_URL: requireEnv('REDIS_URL'),
   RABBITMQ_URL: requireEnv('RABBITMQ_URL'),
+  RABBITMQ_VHOST: optionalEnv('RABBITMQ_VHOST', '/'),
+
   MAIL_EMAIL: requireEnv('MAIL_EMAIL'),
   MAIL_PASSWORD: requireEnv('MAIL_PASSWORD'),
   MAIL_HOST: requireEnv('MAIL_HOST'),
   MAIL_PORT: requireEnv('MAIL_PORT'),
-  RABBITMQ_VHOST: optionalEnv('RABBITMQ_VHOST', '/'),
 };

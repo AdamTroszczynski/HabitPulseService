@@ -16,10 +16,10 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "../models.js"
-import { type PrismaClient } from "./class.js"
+import type * as Prisma from "../models"
+import { type PrismaClient } from "./class"
 
-export type * from '../models.js'
+export type * from '../models'
 
 export type DMMF = typeof runtime.DMMF
 
@@ -387,6 +387,7 @@ export const ModelName = {
   User: 'User',
   Habit: 'Habit',
   Reminder: 'Reminder',
+  ReminderTask: 'ReminderTask',
   Tracking: 'Tracking'
 } as const
 
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "habit" | "reminder" | "tracking"
+    modelProps: "user" | "habit" | "reminder" | "reminderTask" | "tracking"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -629,6 +630,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ReminderTask: {
+      payload: Prisma.$ReminderTaskPayload<ExtArgs>
+      fields: Prisma.ReminderTaskFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReminderTaskFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReminderTaskFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload>
+        }
+        findFirst: {
+          args: Prisma.ReminderTaskFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReminderTaskFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload>
+        }
+        findMany: {
+          args: Prisma.ReminderTaskFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload>[]
+        }
+        create: {
+          args: Prisma.ReminderTaskCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload>
+        }
+        createMany: {
+          args: Prisma.ReminderTaskCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReminderTaskCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload>[]
+        }
+        delete: {
+          args: Prisma.ReminderTaskDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload>
+        }
+        update: {
+          args: Prisma.ReminderTaskUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReminderTaskDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReminderTaskUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReminderTaskUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReminderTaskUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderTaskPayload>
+        }
+        aggregate: {
+          args: Prisma.ReminderTaskAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReminderTask>
+        }
+        groupBy: {
+          args: Prisma.ReminderTaskGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReminderTaskGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReminderTaskCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReminderTaskCountAggregateOutputType> | number
+        }
+      }
+    }
     Tracking: {
       payload: Prisma.$TrackingPayload<ExtArgs>
       fields: Prisma.TrackingFieldRefs
@@ -747,9 +822,10 @@ export const UserScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   name: 'name',
+  secretBase32: 'secretBase32',
+  totpEnabled: 'totpEnabled',
   dateFormat: 'dateFormat',
   lang: 'lang',
-  failedLoginAttempts: 'failedLoginAttempts',
   isVerified: 'isVerified',
   lastLogin: 'lastLogin',
   createdAt: 'createdAt',
@@ -781,15 +857,27 @@ export const ReminderScalarFieldEnum = {
   isReminderActive: 'isReminderActive',
   preferredTime: 'preferredTime',
   frequency: 'frequency',
-  jobId: 'jobId',
-  nextScheduledAt: 'nextScheduledAt',
-  lastSentAt: 'lastSentAt',
-  reminderVersion: 'reminderVersion',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ReminderScalarFieldEnum = (typeof ReminderScalarFieldEnum)[keyof typeof ReminderScalarFieldEnum]
+
+
+export const ReminderTaskScalarFieldEnum = {
+  id: 'id',
+  reminderId: 'reminderId',
+  jobId: 'jobId',
+  scheduledFor: 'scheduledFor',
+  status: 'status',
+  sentAt: 'sentAt',
+  cancelledAt: 'cancelledAt',
+  failReason: 'failReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReminderTaskScalarFieldEnum = (typeof ReminderTaskScalarFieldEnum)[keyof typeof ReminderTaskScalarFieldEnum]
 
 
 export const TrackingScalarFieldEnum = {
@@ -863,6 +951,13 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'DateFormat'
  */
 export type EnumDateFormatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateFormat'>
@@ -891,13 +986,6 @@ export type ListEnumLangFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -908,6 +996,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ReminderTaskStatus'
+ */
+export type EnumReminderTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReminderTaskStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ReminderTaskStatus[]'
+ */
+export type ListEnumReminderTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReminderTaskStatus[]'>
     
 
 
@@ -1022,6 +1124,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   habit?: Prisma.HabitOmit
   reminder?: Prisma.ReminderOmit
+  reminderTask?: Prisma.ReminderTaskOmit
   tracking?: Prisma.TrackingOmit
 }
 

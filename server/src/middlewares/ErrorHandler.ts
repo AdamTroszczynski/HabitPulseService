@@ -8,7 +8,7 @@ export class AppError extends Error {
   constructor(
     public code: ErrorCodes,
     public message: string,
-    public status: number,
+    public status: HttpStatus,
   ) {
     super(message);
   }

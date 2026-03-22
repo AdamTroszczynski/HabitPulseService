@@ -13,10 +13,10 @@
  * 🟢 You can import this file directly.
  */
 
-import * as Prisma from './internal/prismaNamespaceBrowser.js'
+import * as Prisma from './internal/prismaNamespaceBrowser'
 export { Prisma }
-export * as $Enums from './enums.js'
-export * from './enums.js';
+export * as $Enums from './enums'
+export * from './enums';
 /**
  * Model User
  * 
@@ -32,6 +32,11 @@ export type Habit = Prisma.HabitModel
  * 
  */
 export type Reminder = Prisma.ReminderModel
+/**
+ * Model ReminderTask
+ * 
+ */
+export type ReminderTask = Prisma.ReminderTaskModel
 /**
  * Model Tracking
  * 

@@ -1,13 +1,14 @@
 {
   "extends": "../tsconfig.base.json",
   "exclude": ["node_modules", "dist", "coverage", "tests", "src/generated", "generated"],
-  "include": ["src"],
+  "include": ["src", "../shared"],
   "compilerOptions": {
-    "rootDir": "./",
+    "rootDir": "../",
     "outDir": "./dist",
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./server/src/*"],
+      "@shared/*": ["./shared/*"],
+      "@prisma/*": ["./server/generated/prisma/*"]
     }
   }
 }

@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Reminder
@@ -29,13 +29,11 @@ export type AggregateReminder = {
 export type ReminderAvgAggregateOutputType = {
   id: number | null
   habitId: number | null
-  reminderVersion: number | null
 }
 
 export type ReminderSumAggregateOutputType = {
   id: number | null
   habitId: number | null
-  reminderVersion: number | null
 }
 
 export type ReminderMinAggregateOutputType = {
@@ -43,10 +41,6 @@ export type ReminderMinAggregateOutputType = {
   habitId: number | null
   isReminderActive: boolean | null
   preferredTime: string | null
-  jobId: string | null
-  nextScheduledAt: Date | null
-  lastSentAt: Date | null
-  reminderVersion: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,10 +50,6 @@ export type ReminderMaxAggregateOutputType = {
   habitId: number | null
   isReminderActive: boolean | null
   preferredTime: string | null
-  jobId: string | null
-  nextScheduledAt: Date | null
-  lastSentAt: Date | null
-  reminderVersion: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -70,10 +60,6 @@ export type ReminderCountAggregateOutputType = {
   isReminderActive: number
   preferredTime: number
   frequency: number
-  jobId: number
-  nextScheduledAt: number
-  lastSentAt: number
-  reminderVersion: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -83,13 +69,11 @@ export type ReminderCountAggregateOutputType = {
 export type ReminderAvgAggregateInputType = {
   id?: true
   habitId?: true
-  reminderVersion?: true
 }
 
 export type ReminderSumAggregateInputType = {
   id?: true
   habitId?: true
-  reminderVersion?: true
 }
 
 export type ReminderMinAggregateInputType = {
@@ -97,10 +81,6 @@ export type ReminderMinAggregateInputType = {
   habitId?: true
   isReminderActive?: true
   preferredTime?: true
-  jobId?: true
-  nextScheduledAt?: true
-  lastSentAt?: true
-  reminderVersion?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -110,10 +90,6 @@ export type ReminderMaxAggregateInputType = {
   habitId?: true
   isReminderActive?: true
   preferredTime?: true
-  jobId?: true
-  nextScheduledAt?: true
-  lastSentAt?: true
-  reminderVersion?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -124,10 +100,6 @@ export type ReminderCountAggregateInputType = {
   isReminderActive?: true
   preferredTime?: true
   frequency?: true
-  jobId?: true
-  nextScheduledAt?: true
-  lastSentAt?: true
-  reminderVersion?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -225,10 +197,6 @@ export type ReminderGroupByOutputType = {
   isReminderActive: boolean
   preferredTime: string
   frequency: string[]
-  jobId: string | null
-  nextScheduledAt: Date | null
-  lastSentAt: Date | null
-  reminderVersion: number
   createdAt: Date
   updatedAt: Date
   _count: ReminderCountAggregateOutputType | null
@@ -262,13 +230,10 @@ export type ReminderWhereInput = {
   isReminderActive?: Prisma.BoolFilter<"Reminder"> | boolean
   preferredTime?: Prisma.StringFilter<"Reminder"> | string
   frequency?: Prisma.StringNullableListFilter<"Reminder">
-  jobId?: Prisma.StringNullableFilter<"Reminder"> | string | null
-  nextScheduledAt?: Prisma.DateTimeNullableFilter<"Reminder"> | Date | string | null
-  lastSentAt?: Prisma.DateTimeNullableFilter<"Reminder"> | Date | string | null
-  reminderVersion?: Prisma.IntFilter<"Reminder"> | number
   createdAt?: Prisma.DateTimeFilter<"Reminder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reminder"> | Date | string
   habit?: Prisma.XOR<Prisma.HabitScalarRelationFilter, Prisma.HabitWhereInput>
+  reminderTasks?: Prisma.ReminderTaskListRelationFilter
 }
 
 export type ReminderOrderByWithRelationInput = {
@@ -277,13 +242,10 @@ export type ReminderOrderByWithRelationInput = {
   isReminderActive?: Prisma.SortOrder
   preferredTime?: Prisma.SortOrder
   frequency?: Prisma.SortOrder
-  jobId?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextScheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  lastSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  reminderVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   habit?: Prisma.HabitOrderByWithRelationInput
+  reminderTasks?: Prisma.ReminderTaskOrderByRelationAggregateInput
 }
 
 export type ReminderWhereUniqueInput = Prisma.AtLeast<{
@@ -295,13 +257,10 @@ export type ReminderWhereUniqueInput = Prisma.AtLeast<{
   isReminderActive?: Prisma.BoolFilter<"Reminder"> | boolean
   preferredTime?: Prisma.StringFilter<"Reminder"> | string
   frequency?: Prisma.StringNullableListFilter<"Reminder">
-  jobId?: Prisma.StringNullableFilter<"Reminder"> | string | null
-  nextScheduledAt?: Prisma.DateTimeNullableFilter<"Reminder"> | Date | string | null
-  lastSentAt?: Prisma.DateTimeNullableFilter<"Reminder"> | Date | string | null
-  reminderVersion?: Prisma.IntFilter<"Reminder"> | number
   createdAt?: Prisma.DateTimeFilter<"Reminder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reminder"> | Date | string
   habit?: Prisma.XOR<Prisma.HabitScalarRelationFilter, Prisma.HabitWhereInput>
+  reminderTasks?: Prisma.ReminderTaskListRelationFilter
 }, "id" | "habitId">
 
 export type ReminderOrderByWithAggregationInput = {
@@ -310,10 +269,6 @@ export type ReminderOrderByWithAggregationInput = {
   isReminderActive?: Prisma.SortOrder
   preferredTime?: Prisma.SortOrder
   frequency?: Prisma.SortOrder
-  jobId?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextScheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  lastSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  reminderVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ReminderCountOrderByAggregateInput
@@ -332,10 +287,6 @@ export type ReminderScalarWhereWithAggregatesInput = {
   isReminderActive?: Prisma.BoolWithAggregatesFilter<"Reminder"> | boolean
   preferredTime?: Prisma.StringWithAggregatesFilter<"Reminder"> | string
   frequency?: Prisma.StringNullableListFilter<"Reminder">
-  jobId?: Prisma.StringNullableWithAggregatesFilter<"Reminder"> | string | null
-  nextScheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Reminder"> | Date | string | null
-  lastSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Reminder"> | Date | string | null
-  reminderVersion?: Prisma.IntWithAggregatesFilter<"Reminder"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Reminder"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Reminder"> | Date | string
 }
@@ -344,13 +295,10 @@ export type ReminderCreateInput = {
   isReminderActive?: boolean
   preferredTime?: string
   frequency?: Prisma.ReminderCreatefrequencyInput | string[]
-  jobId?: string | null
-  nextScheduledAt?: Date | string | null
-  lastSentAt?: Date | string | null
-  reminderVersion?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   habit: Prisma.HabitCreateNestedOneWithoutReminderInput
+  reminderTasks?: Prisma.ReminderTaskCreateNestedManyWithoutReminderInput
 }
 
 export type ReminderUncheckedCreateInput = {
@@ -359,25 +307,19 @@ export type ReminderUncheckedCreateInput = {
   isReminderActive?: boolean
   preferredTime?: string
   frequency?: Prisma.ReminderCreatefrequencyInput | string[]
-  jobId?: string | null
-  nextScheduledAt?: Date | string | null
-  lastSentAt?: Date | string | null
-  reminderVersion?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  reminderTasks?: Prisma.ReminderTaskUncheckedCreateNestedManyWithoutReminderInput
 }
 
 export type ReminderUpdateInput = {
   isReminderActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   frequency?: Prisma.ReminderUpdatefrequencyInput | string[]
-  jobId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reminderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   habit?: Prisma.HabitUpdateOneRequiredWithoutReminderNestedInput
+  reminderTasks?: Prisma.ReminderTaskUpdateManyWithoutReminderNestedInput
 }
 
 export type ReminderUncheckedUpdateInput = {
@@ -386,12 +328,9 @@ export type ReminderUncheckedUpdateInput = {
   isReminderActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   frequency?: Prisma.ReminderUpdatefrequencyInput | string[]
-  jobId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reminderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reminderTasks?: Prisma.ReminderTaskUncheckedUpdateManyWithoutReminderNestedInput
 }
 
 export type ReminderCreateManyInput = {
@@ -400,10 +339,6 @@ export type ReminderCreateManyInput = {
   isReminderActive?: boolean
   preferredTime?: string
   frequency?: Prisma.ReminderCreatefrequencyInput | string[]
-  jobId?: string | null
-  nextScheduledAt?: Date | string | null
-  lastSentAt?: Date | string | null
-  reminderVersion?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -412,10 +347,6 @@ export type ReminderUpdateManyMutationInput = {
   isReminderActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   frequency?: Prisma.ReminderUpdatefrequencyInput | string[]
-  jobId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reminderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -426,10 +357,6 @@ export type ReminderUncheckedUpdateManyInput = {
   isReminderActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   frequency?: Prisma.ReminderUpdatefrequencyInput | string[]
-  jobId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reminderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -445,10 +372,6 @@ export type ReminderCountOrderByAggregateInput = {
   isReminderActive?: Prisma.SortOrder
   preferredTime?: Prisma.SortOrder
   frequency?: Prisma.SortOrder
-  jobId?: Prisma.SortOrder
-  nextScheduledAt?: Prisma.SortOrder
-  lastSentAt?: Prisma.SortOrder
-  reminderVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -456,7 +379,6 @@ export type ReminderCountOrderByAggregateInput = {
 export type ReminderAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   habitId?: Prisma.SortOrder
-  reminderVersion?: Prisma.SortOrder
 }
 
 export type ReminderMaxOrderByAggregateInput = {
@@ -464,10 +386,6 @@ export type ReminderMaxOrderByAggregateInput = {
   habitId?: Prisma.SortOrder
   isReminderActive?: Prisma.SortOrder
   preferredTime?: Prisma.SortOrder
-  jobId?: Prisma.SortOrder
-  nextScheduledAt?: Prisma.SortOrder
-  lastSentAt?: Prisma.SortOrder
-  reminderVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -477,10 +395,6 @@ export type ReminderMinOrderByAggregateInput = {
   habitId?: Prisma.SortOrder
   isReminderActive?: Prisma.SortOrder
   preferredTime?: Prisma.SortOrder
-  jobId?: Prisma.SortOrder
-  nextScheduledAt?: Prisma.SortOrder
-  lastSentAt?: Prisma.SortOrder
-  reminderVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -488,7 +402,11 @@ export type ReminderMinOrderByAggregateInput = {
 export type ReminderSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   habitId?: Prisma.SortOrder
-  reminderVersion?: Prisma.SortOrder
+}
+
+export type ReminderScalarRelationFilter = {
+  is?: Prisma.ReminderWhereInput
+  isNot?: Prisma.ReminderWhereInput
 }
 
 export type ReminderCreateNestedOneWithoutHabitInput = {
@@ -532,16 +450,27 @@ export type ReminderUpdatefrequencyInput = {
   push?: string | string[]
 }
 
+export type ReminderCreateNestedOneWithoutReminderTasksInput = {
+  create?: Prisma.XOR<Prisma.ReminderCreateWithoutReminderTasksInput, Prisma.ReminderUncheckedCreateWithoutReminderTasksInput>
+  connectOrCreate?: Prisma.ReminderCreateOrConnectWithoutReminderTasksInput
+  connect?: Prisma.ReminderWhereUniqueInput
+}
+
+export type ReminderUpdateOneRequiredWithoutReminderTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.ReminderCreateWithoutReminderTasksInput, Prisma.ReminderUncheckedCreateWithoutReminderTasksInput>
+  connectOrCreate?: Prisma.ReminderCreateOrConnectWithoutReminderTasksInput
+  upsert?: Prisma.ReminderUpsertWithoutReminderTasksInput
+  connect?: Prisma.ReminderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReminderUpdateToOneWithWhereWithoutReminderTasksInput, Prisma.ReminderUpdateWithoutReminderTasksInput>, Prisma.ReminderUncheckedUpdateWithoutReminderTasksInput>
+}
+
 export type ReminderCreateWithoutHabitInput = {
   isReminderActive?: boolean
   preferredTime?: string
   frequency?: Prisma.ReminderCreatefrequencyInput | string[]
-  jobId?: string | null
-  nextScheduledAt?: Date | string | null
-  lastSentAt?: Date | string | null
-  reminderVersion?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  reminderTasks?: Prisma.ReminderTaskCreateNestedManyWithoutReminderInput
 }
 
 export type ReminderUncheckedCreateWithoutHabitInput = {
@@ -549,12 +478,9 @@ export type ReminderUncheckedCreateWithoutHabitInput = {
   isReminderActive?: boolean
   preferredTime?: string
   frequency?: Prisma.ReminderCreatefrequencyInput | string[]
-  jobId?: string | null
-  nextScheduledAt?: Date | string | null
-  lastSentAt?: Date | string | null
-  reminderVersion?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  reminderTasks?: Prisma.ReminderTaskUncheckedCreateNestedManyWithoutReminderInput
 }
 
 export type ReminderCreateOrConnectWithoutHabitInput = {
@@ -577,12 +503,9 @@ export type ReminderUpdateWithoutHabitInput = {
   isReminderActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   frequency?: Prisma.ReminderUpdatefrequencyInput | string[]
-  jobId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reminderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reminderTasks?: Prisma.ReminderTaskUpdateManyWithoutReminderNestedInput
 }
 
 export type ReminderUncheckedUpdateWithoutHabitInput = {
@@ -590,14 +513,94 @@ export type ReminderUncheckedUpdateWithoutHabitInput = {
   isReminderActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
   frequency?: Prisma.ReminderUpdatefrequencyInput | string[]
-  jobId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reminderVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reminderTasks?: Prisma.ReminderTaskUncheckedUpdateManyWithoutReminderNestedInput
+}
+
+export type ReminderCreateWithoutReminderTasksInput = {
+  isReminderActive?: boolean
+  preferredTime?: string
+  frequency?: Prisma.ReminderCreatefrequencyInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  habit: Prisma.HabitCreateNestedOneWithoutReminderInput
+}
+
+export type ReminderUncheckedCreateWithoutReminderTasksInput = {
+  id?: number
+  habitId: number
+  isReminderActive?: boolean
+  preferredTime?: string
+  frequency?: Prisma.ReminderCreatefrequencyInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ReminderCreateOrConnectWithoutReminderTasksInput = {
+  where: Prisma.ReminderWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReminderCreateWithoutReminderTasksInput, Prisma.ReminderUncheckedCreateWithoutReminderTasksInput>
+}
+
+export type ReminderUpsertWithoutReminderTasksInput = {
+  update: Prisma.XOR<Prisma.ReminderUpdateWithoutReminderTasksInput, Prisma.ReminderUncheckedUpdateWithoutReminderTasksInput>
+  create: Prisma.XOR<Prisma.ReminderCreateWithoutReminderTasksInput, Prisma.ReminderUncheckedCreateWithoutReminderTasksInput>
+  where?: Prisma.ReminderWhereInput
+}
+
+export type ReminderUpdateToOneWithWhereWithoutReminderTasksInput = {
+  where?: Prisma.ReminderWhereInput
+  data: Prisma.XOR<Prisma.ReminderUpdateWithoutReminderTasksInput, Prisma.ReminderUncheckedUpdateWithoutReminderTasksInput>
+}
+
+export type ReminderUpdateWithoutReminderTasksInput = {
+  isReminderActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
+  frequency?: Prisma.ReminderUpdatefrequencyInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  habit?: Prisma.HabitUpdateOneRequiredWithoutReminderNestedInput
+}
+
+export type ReminderUncheckedUpdateWithoutReminderTasksInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  habitId?: Prisma.IntFieldUpdateOperationsInput | number
+  isReminderActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredTime?: Prisma.StringFieldUpdateOperationsInput | string
+  frequency?: Prisma.ReminderUpdatefrequencyInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type ReminderCountOutputType
+ */
+
+export type ReminderCountOutputType = {
+  reminderTasks: number
+}
+
+export type ReminderCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reminderTasks?: boolean | ReminderCountOutputTypeCountReminderTasksArgs
+}
+
+/**
+ * ReminderCountOutputType without action
+ */
+export type ReminderCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReminderCountOutputType
+   */
+  select?: Prisma.ReminderCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ReminderCountOutputType without action
+ */
+export type ReminderCountOutputTypeCountReminderTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReminderTaskWhereInput
+}
 
 
 export type ReminderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -606,13 +609,11 @@ export type ReminderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   isReminderActive?: boolean
   preferredTime?: boolean
   frequency?: boolean
-  jobId?: boolean
-  nextScheduledAt?: boolean
-  lastSentAt?: boolean
-  reminderVersion?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   habit?: boolean | Prisma.HabitDefaultArgs<ExtArgs>
+  reminderTasks?: boolean | Prisma.Reminder$reminderTasksArgs<ExtArgs>
+  _count?: boolean | Prisma.ReminderCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reminder"]>
 
 export type ReminderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -621,10 +622,6 @@ export type ReminderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   isReminderActive?: boolean
   preferredTime?: boolean
   frequency?: boolean
-  jobId?: boolean
-  nextScheduledAt?: boolean
-  lastSentAt?: boolean
-  reminderVersion?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   habit?: boolean | Prisma.HabitDefaultArgs<ExtArgs>
@@ -636,10 +633,6 @@ export type ReminderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   isReminderActive?: boolean
   preferredTime?: boolean
   frequency?: boolean
-  jobId?: boolean
-  nextScheduledAt?: boolean
-  lastSentAt?: boolean
-  reminderVersion?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   habit?: boolean | Prisma.HabitDefaultArgs<ExtArgs>
@@ -651,17 +644,15 @@ export type ReminderSelectScalar = {
   isReminderActive?: boolean
   preferredTime?: boolean
   frequency?: boolean
-  jobId?: boolean
-  nextScheduledAt?: boolean
-  lastSentAt?: boolean
-  reminderVersion?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReminderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "habitId" | "isReminderActive" | "preferredTime" | "frequency" | "jobId" | "nextScheduledAt" | "lastSentAt" | "reminderVersion" | "createdAt" | "updatedAt", ExtArgs["result"]["reminder"]>
+export type ReminderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "habitId" | "isReminderActive" | "preferredTime" | "frequency" | "createdAt" | "updatedAt", ExtArgs["result"]["reminder"]>
 export type ReminderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   habit?: boolean | Prisma.HabitDefaultArgs<ExtArgs>
+  reminderTasks?: boolean | Prisma.Reminder$reminderTasksArgs<ExtArgs>
+  _count?: boolean | Prisma.ReminderCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ReminderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   habit?: boolean | Prisma.HabitDefaultArgs<ExtArgs>
@@ -674,6 +665,7 @@ export type $ReminderPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Reminder"
   objects: {
     habit: Prisma.$HabitPayload<ExtArgs>
+    reminderTasks: Prisma.$ReminderTaskPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -681,10 +673,6 @@ export type $ReminderPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     isReminderActive: boolean
     preferredTime: string
     frequency: string[]
-    jobId: string | null
-    nextScheduledAt: Date | null
-    lastSentAt: Date | null
-    reminderVersion: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["reminder"]>
@@ -1082,6 +1070,7 @@ readonly fields: ReminderFieldRefs;
 export interface Prisma__ReminderClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   habit<T extends Prisma.HabitDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HabitDefaultArgs<ExtArgs>>): Prisma.Prisma__HabitClient<runtime.Types.Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  reminderTasks<T extends Prisma.Reminder$reminderTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Reminder$reminderTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReminderTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1116,10 +1105,6 @@ export interface ReminderFieldRefs {
   readonly isReminderActive: Prisma.FieldRef<"Reminder", 'Boolean'>
   readonly preferredTime: Prisma.FieldRef<"Reminder", 'String'>
   readonly frequency: Prisma.FieldRef<"Reminder", 'String[]'>
-  readonly jobId: Prisma.FieldRef<"Reminder", 'String'>
-  readonly nextScheduledAt: Prisma.FieldRef<"Reminder", 'DateTime'>
-  readonly lastSentAt: Prisma.FieldRef<"Reminder", 'DateTime'>
-  readonly reminderVersion: Prisma.FieldRef<"Reminder", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Reminder", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Reminder", 'DateTime'>
 }
@@ -1520,6 +1505,30 @@ export type ReminderDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Reminders to delete.
    */
   limit?: number
+}
+
+/**
+ * Reminder.reminderTasks
+ */
+export type Reminder$reminderTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReminderTask
+   */
+  select?: Prisma.ReminderTaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ReminderTask
+   */
+  omit?: Prisma.ReminderTaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReminderTaskInclude<ExtArgs> | null
+  where?: Prisma.ReminderTaskWhereInput
+  orderBy?: Prisma.ReminderTaskOrderByWithRelationInput | Prisma.ReminderTaskOrderByWithRelationInput[]
+  cursor?: Prisma.ReminderTaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReminderTaskScalarFieldEnum | Prisma.ReminderTaskScalarFieldEnum[]
 }
 
 /**
