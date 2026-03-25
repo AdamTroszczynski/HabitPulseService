@@ -4,7 +4,12 @@ export const LoginDTOSchema = z.object({
   email: z.email().nonempty(),
   password: z.string().min(6),
   rememberMe: z.boolean(),
-  token: z.string().optional().nullable(),
+});
+
+export const CheckTotpCodeDTOSchema = z.object({
+  token: z.string().nonempty(),
+  code: z.string().min(6).max(6),
+  rememberMe: z.boolean(),
 });
 
 export const LogoutDTOSchema = z.object({
@@ -34,6 +39,7 @@ export const ResendActivationDTOSchema = z.object({
 });
 
 export type LoginDTO = z.infer<typeof LoginDTOSchema>;
+export type CheckTotpCodeDTO = z.infer<typeof CheckTotpCodeDTOSchema>;
 export type LogoutDTO = z.infer<typeof LogoutDTOSchema>;
 export type RegisterDTO = z.infer<typeof RegisterDTOSchema>;
 export type ActivateDTO = z.infer<typeof ActivateDTOSchema>;

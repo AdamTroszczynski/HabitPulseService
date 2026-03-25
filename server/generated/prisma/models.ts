@@ -9,6 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/Audit'
 export type * from './models/Habit'
 export type * from './models/Reminder'
 export type * from './models/ReminderTask'

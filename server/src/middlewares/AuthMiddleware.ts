@@ -1,34 +1,22 @@
 import { NextFunction, Request, Response } from 'express';
-import redisClient from '@shared/lib/redis';
+import { logger } from '@shared/lib/logger';
 import { AUTH_TOKEN_NAME } from '@/const/CommonConst';
+import { verifyAuthToken } from '@/lib/jwt';
+import { AppError } from './ErrorHandler';
 import { ErrorCodes } from '@/enums/ErrorCodes';
 import { HttpStatus } from '@/enums/HttpStatus';
-import { generateAuthToken, verifyAuthToken } from '@/lib/jwt';
-import { removeCookie, sendCookie } from '@/helpers/SendCookie';
-import { AppError } from '@/middlewares/ErrorHandler';
 
-export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const authToken = req.cookies[AUTH_TOKEN_NAME];
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  logger.debug({ path: req.path });
+  if (req.path === '/v1/logout') return next();
+  const authToken = req.cookies[AUTH_TOKEN_NAME];
 
-    if (!authToken) throw new AppError(ErrorCodes.UNAUTHORIZED, 'Unauthorized', HttpStatus.UNAUTHORIZED);
+  if (!authToken) return next();
 
-    const authTokenPayload = verifyAuthToken(authToken);
-    const isOnBlacklist = await redisClient.get(`habitpulse:blacklist:${authTokenPayload.jti}`);
-    if (authTokenPayload?.type !== 'auth' || isOnBlacklist) {
-      removeCookie(res, AUTH_TOKEN_NAME);
-      throw new AppError(ErrorCodes.UNAUTHORIZED, 'Unauthorized', HttpStatus.UNAUTHORIZED);
-    }
+  const payload = verifyAuthToken(authToken);
+  if (!payload) return next();
 
-    const oneMinuteInMs = 60 * 1000;
-    const elapsed = Date.now() - authTokenPayload.iat;
-    if (authTokenPayload.duration === 'short' && elapsed > oneMinuteInMs) {
-      const newToken = generateAuthToken({ type: 'auth', duration: 'short', userId: authTokenPayload.userId });
-      sendCookie(res, AUTH_TOKEN_NAME, newToken, false);
-    }
-    req.userId = authTokenPayload.userId;
-    next();
-  } catch (err) {
-    next(err);
-  }
+  if (payload.type !== 'auth') return next();
+
+  throw new AppError(ErrorCodes.FORBIDDEN, 'User is already logged', HttpStatus.FORBIDDEN);
 };

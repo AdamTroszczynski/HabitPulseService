@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  Audit: 'Audit',
   Habit: 'Habit',
   Reminder: 'Reminder',
   ReminderTask: 'ReminderTask',
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "habit" | "reminder" | "reminderTask" | "tracking"
+    modelProps: "user" | "audit" | "habit" | "reminder" | "reminderTask" | "tracking"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -479,6 +480,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    Audit: {
+      payload: Prisma.$AuditPayload<ExtArgs>
+      fields: Prisma.AuditFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AuditFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AuditFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        findFirst: {
+          args: Prisma.AuditFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AuditFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        findMany: {
+          args: Prisma.AuditFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>[]
+        }
+        create: {
+          args: Prisma.AuditCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        createMany: {
+          args: Prisma.AuditCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AuditCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>[]
+        }
+        delete: {
+          args: Prisma.AuditDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        update: {
+          args: Prisma.AuditUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        deleteMany: {
+          args: Prisma.AuditDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AuditUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AuditUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>[]
+        }
+        upsert: {
+          args: Prisma.AuditUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditPayload>
+        }
+        aggregate: {
+          args: Prisma.AuditAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAudit>
+        }
+        groupBy: {
+          args: Prisma.AuditGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuditGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AuditCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuditCountAggregateOutputType> | number
         }
       }
     }
@@ -824,6 +899,8 @@ export const UserScalarFieldEnum = {
   name: 'name',
   secretBase32: 'secretBase32',
   totpEnabled: 'totpEnabled',
+  googleId: 'googleId',
+  githubId: 'githubId',
   dateFormat: 'dateFormat',
   lang: 'lang',
   isVerified: 'isVerified',
@@ -833,6 +910,23 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AuditScalarFieldEnum = {
+  id: 'id',
+  correlationId: 'correlationId',
+  userId: 'userId',
+  url: 'url',
+  method: 'method',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  statusCode: 'statusCode',
+  statusMessage: 'statusMessage',
+  error: 'error',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditScalarFieldEnum = (typeof AuditScalarFieldEnum)[keyof typeof AuditScalarFieldEnum]
 
 
 export const HabitScalarFieldEnum = {
@@ -1122,6 +1216,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  audit?: Prisma.AuditOmit
   habit?: Prisma.HabitOmit
   reminder?: Prisma.ReminderOmit
   reminderTask?: Prisma.ReminderTaskOmit

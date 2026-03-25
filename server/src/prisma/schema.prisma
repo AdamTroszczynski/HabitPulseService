@@ -27,19 +27,39 @@ enum ReminderTaskStatus {
 model User {
   id           Int        @id @default(autoincrement())
   email        String     @unique @db.VarChar(255)
-  passwordHash String     @map("password_hash")
+  passwordHash String?    @map("password_hash")
   name         String     @db.VarChar(40)
   secretBase32 String?    @map("secret_base32")
   totpEnabled  Boolean    @default(false) @map("totp-enabled")
+  googleId     String?    @unique @map("google_id")
+  githubId     String?    @unique @map("github_id")
   dateFormat   DateFormat @default(DD_MM_YYYY) @map("date_format")
   lang         Lang       @default(PL)
   habits       Habit[]
+  audits       Audit[]
   isVerified   Boolean    @default(false) @map("is_verified")
   lastLogin    DateTime?  @map("last_login")
   createdAt    DateTime   @default(now()) @map("created_at")
   updatedAt    DateTime   @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+model Audit {
+  id            Int      @id @default(autoincrement())
+  correlationId String?  @map("correlation_id")
+  userId        Int?     @map("user_id")
+  user          User?    @relation(fields: [userId], references: [id])
+  url           String
+  method        String
+  ipAddress     String?  @map("ip_address")
+  userAgent     String?  @map("user_agent")
+  statusCode    Int      @map("status_code")
+  statusMessage String   @map("status_message")
+  error         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("audits")
 }
 
 model Habit {
@@ -86,6 +106,8 @@ model ReminderTask {
   failReason   String?            @map("fail_reason")
   createdAt    DateTime           @default(now()) @map("created_at")
   updatedAt    DateTime           @updatedAt @map("updated_at")
+
+  @@map("reminder_tasks")
 }
 
 model Tracking {

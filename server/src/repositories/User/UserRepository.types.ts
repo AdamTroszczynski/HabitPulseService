@@ -1,3 +1,5 @@
+import { Providers } from '@/lib/passport';
+
 export type GetUserByIdDTO = {
   id: number;
 };
@@ -6,10 +8,20 @@ export type GetUserByEmailDTO = {
   email: string;
 };
 
+export type GetUserByProviderDTO = {
+  providerName: Providers;
+  providerValue: string;
+};
+
 export type CreateUserDTO = {
   email: string;
   passwordHash: string;
-  name: string;
+};
+
+export type CreateUserOAuthDTO = {
+  email: string;
+  providerName: Providers;
+  providerValue: string;
 };
 
 export type ChangeUserPasswordDTO = {
@@ -24,7 +36,13 @@ export type EnableUserTotpDTO = {
 
 export type ChangeUserTotpSecretDTO = {
   id: number;
-  secret: string;
+  secret: string | null;
+};
+
+export type ChangeUserProviderIdDTO = {
+  id: number;
+  providerName: Providers;
+  providerValue: string;
 };
 
 export type VerifyUserDTO = {

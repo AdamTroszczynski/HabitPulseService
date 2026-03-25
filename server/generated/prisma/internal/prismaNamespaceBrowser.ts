@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Audit: 'Audit',
   Habit: 'Habit',
   Reminder: 'Reminder',
   ReminderTask: 'ReminderTask',
@@ -81,6 +82,8 @@ export const UserScalarFieldEnum = {
   name: 'name',
   secretBase32: 'secretBase32',
   totpEnabled: 'totpEnabled',
+  googleId: 'googleId',
+  githubId: 'githubId',
   dateFormat: 'dateFormat',
   lang: 'lang',
   isVerified: 'isVerified',
@@ -90,6 +93,23 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AuditScalarFieldEnum = {
+  id: 'id',
+  correlationId: 'correlationId',
+  userId: 'userId',
+  url: 'url',
+  method: 'method',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  statusCode: 'statusCode',
+  statusMessage: 'statusMessage',
+  error: 'error',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditScalarFieldEnum = (typeof AuditScalarFieldEnum)[keyof typeof AuditScalarFieldEnum]
 
 
 export const HabitScalarFieldEnum = {

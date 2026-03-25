@@ -1,6 +1,8 @@
-import { User } from '@prisma/client';
-
 export type LoginServiceResult = {
-  user: User;
+  token: string;
+  requiresTOTP: boolean;
+};
+
+export type CheckTotpCodeServiceResult = {
   token: string;
 };

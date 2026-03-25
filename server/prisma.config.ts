@@ -1,5 +1,7 @@
-import './src/helpers/LoadEnv';
-import { defineConfig, env } from 'prisma/config';
+import { defineConfig } from 'prisma/config';
+import path from 'node:path';
+
+process.loadEnvFile(path.resolve('../.env'));
 
 export default defineConfig({
   schema: 'src/prisma/schema.prisma',
@@ -7,6 +9,6 @@ export default defineConfig({
     path: 'src/prisma/migrations',
   },
   datasource: {
-    url: env('DATABASE_URL'),
+    url: process.env.DATABASE_URL,
   },
 });

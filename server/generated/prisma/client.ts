@@ -47,6 +47,11 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
+ * Model Audit
+ * 
+ */
+export type Audit = Prisma.AuditModel
+/**
  * Model Habit
  * 
  */

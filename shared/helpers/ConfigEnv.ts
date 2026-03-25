@@ -9,6 +9,8 @@ const optionalEnv = (key: string, defaultValue: string): string => {
 };
 
 export const env = {
+  API_URL: requireEnv('API_URL'),
+  PORT: requireEnv('PORT'),
   JWT_SECRET: requireEnv('JWT_SECRET'),
   BCRYPT_ROUNDS: Number(requireEnv('BCRYPT_ROUNDS')),
   DATABASE_URL: requireEnv('DATABASE_URL'),
@@ -17,6 +19,11 @@ export const env = {
   REDIS_URL: requireEnv('REDIS_URL'),
   RABBITMQ_URL: requireEnv('RABBITMQ_URL'),
   RABBITMQ_VHOST: optionalEnv('RABBITMQ_VHOST', '/'),
+
+  GITHUB_CLIENT_ID: requireEnv('GITHUB_CLIENT_ID'),
+  GITHUB_CLIENT_SECRET: requireEnv('GITHUB_CLIENT_SECRET'),
+  GOOGLE_CLIENT_ID: requireEnv('GOOGLE_CLIENT_ID'),
+  GOOGLE_CLIENT_SECRET: requireEnv('GOOGLE_CLIENT_SECRET'),
 
   MAIL_EMAIL: requireEnv('MAIL_EMAIL'),
   MAIL_PASSWORD: requireEnv('MAIL_PASSWORD'),

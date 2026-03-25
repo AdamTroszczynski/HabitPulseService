@@ -41,6 +41,8 @@ export type UserMinAggregateOutputType = {
   name: string | null
   secretBase32: string | null
   totpEnabled: boolean | null
+  googleId: string | null
+  githubId: string | null
   dateFormat: $Enums.DateFormat | null
   lang: $Enums.Lang | null
   isVerified: boolean | null
@@ -56,6 +58,8 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   secretBase32: string | null
   totpEnabled: boolean | null
+  googleId: string | null
+  githubId: string | null
   dateFormat: $Enums.DateFormat | null
   lang: $Enums.Lang | null
   isVerified: boolean | null
@@ -71,6 +75,8 @@ export type UserCountAggregateOutputType = {
   name: number
   secretBase32: number
   totpEnabled: number
+  googleId: number
+  githubId: number
   dateFormat: number
   lang: number
   isVerified: number
@@ -96,6 +102,8 @@ export type UserMinAggregateInputType = {
   name?: true
   secretBase32?: true
   totpEnabled?: true
+  googleId?: true
+  githubId?: true
   dateFormat?: true
   lang?: true
   isVerified?: true
@@ -111,6 +119,8 @@ export type UserMaxAggregateInputType = {
   name?: true
   secretBase32?: true
   totpEnabled?: true
+  googleId?: true
+  githubId?: true
   dateFormat?: true
   lang?: true
   isVerified?: true
@@ -126,6 +136,8 @@ export type UserCountAggregateInputType = {
   name?: true
   secretBase32?: true
   totpEnabled?: true
+  googleId?: true
+  githubId?: true
   dateFormat?: true
   lang?: true
   isVerified?: true
@@ -224,10 +236,12 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: number
   email: string
-  passwordHash: string
+  passwordHash: string | null
   name: string
   secretBase32: string | null
   totpEnabled: boolean
+  googleId: string | null
+  githubId: string | null
   dateFormat: $Enums.DateFormat
   lang: $Enums.Lang
   isVerified: boolean
@@ -262,10 +276,12 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.IntFilter<"User"> | number
   email?: Prisma.StringFilter<"User"> | string
-  passwordHash?: Prisma.StringFilter<"User"> | string
+  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   name?: Prisma.StringFilter<"User"> | string
   secretBase32?: Prisma.StringNullableFilter<"User"> | string | null
   totpEnabled?: Prisma.BoolFilter<"User"> | boolean
+  googleId?: Prisma.StringNullableFilter<"User"> | string | null
+  githubId?: Prisma.StringNullableFilter<"User"> | string | null
   dateFormat?: Prisma.EnumDateFormatFilter<"User"> | $Enums.DateFormat
   lang?: Prisma.EnumLangFilter<"User"> | $Enums.Lang
   isVerified?: Prisma.BoolFilter<"User"> | boolean
@@ -273,15 +289,18 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   habits?: Prisma.HabitListRelationFilter
+  audits?: Prisma.AuditListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   secretBase32?: Prisma.SortOrderInput | Prisma.SortOrder
   totpEnabled?: Prisma.SortOrder
+  googleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  githubId?: Prisma.SortOrderInput | Prisma.SortOrder
   dateFormat?: Prisma.SortOrder
   lang?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -289,15 +308,18 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   habits?: Prisma.HabitOrderByRelationAggregateInput
+  audits?: Prisma.AuditOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   email?: string
+  googleId?: string
+  githubId?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  passwordHash?: Prisma.StringFilter<"User"> | string
+  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   name?: Prisma.StringFilter<"User"> | string
   secretBase32?: Prisma.StringNullableFilter<"User"> | string | null
   totpEnabled?: Prisma.BoolFilter<"User"> | boolean
@@ -308,15 +330,18 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   habits?: Prisma.HabitListRelationFilter
-}, "id" | "email">
+  audits?: Prisma.AuditListRelationFilter
+}, "id" | "email" | "googleId" | "githubId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   secretBase32?: Prisma.SortOrderInput | Prisma.SortOrder
   totpEnabled?: Prisma.SortOrder
+  googleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  githubId?: Prisma.SortOrderInput | Prisma.SortOrder
   dateFormat?: Prisma.SortOrder
   lang?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -336,10 +361,12 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"User"> | number
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
+  passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   secretBase32?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   totpEnabled?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  googleId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  githubId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   dateFormat?: Prisma.EnumDateFormatWithAggregatesFilter<"User"> | $Enums.DateFormat
   lang?: Prisma.EnumLangWithAggregatesFilter<"User"> | $Enums.Lang
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -350,10 +377,12 @@ export type UserScalarWhereWithAggregatesInput = {
 
 export type UserCreateInput = {
   email: string
-  passwordHash: string
+  passwordHash?: string | null
   name: string
   secretBase32?: string | null
   totpEnabled?: boolean
+  googleId?: string | null
+  githubId?: string | null
   dateFormat?: $Enums.DateFormat
   lang?: $Enums.Lang
   isVerified?: boolean
@@ -361,15 +390,18 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  audits?: Prisma.AuditCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: number
   email: string
-  passwordHash: string
+  passwordHash?: string | null
   name: string
   secretBase32?: string | null
   totpEnabled?: boolean
+  googleId?: string | null
+  githubId?: string | null
   dateFormat?: $Enums.DateFormat
   lang?: $Enums.Lang
   isVerified?: boolean
@@ -377,14 +409,17 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  audits?: Prisma.AuditUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -392,15 +427,18 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  audits?: Prisma.AuditUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -408,15 +446,18 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  audits?: Prisma.AuditUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: number
   email: string
-  passwordHash: string
+  passwordHash?: string | null
   name: string
   secretBase32?: string | null
   totpEnabled?: boolean
+  googleId?: string | null
+  githubId?: string | null
   dateFormat?: $Enums.DateFormat
   lang?: $Enums.Lang
   isVerified?: boolean
@@ -427,10 +468,12 @@ export type UserCreateManyInput = {
 
 export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -442,10 +485,12 @@ export type UserUpdateManyMutationInput = {
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -461,6 +506,8 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   secretBase32?: Prisma.SortOrder
   totpEnabled?: Prisma.SortOrder
+  googleId?: Prisma.SortOrder
+  githubId?: Prisma.SortOrder
   dateFormat?: Prisma.SortOrder
   lang?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -480,6 +527,8 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   secretBase32?: Prisma.SortOrder
   totpEnabled?: Prisma.SortOrder
+  googleId?: Prisma.SortOrder
+  githubId?: Prisma.SortOrder
   dateFormat?: Prisma.SortOrder
   lang?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -495,6 +544,8 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   secretBase32?: Prisma.SortOrder
   totpEnabled?: Prisma.SortOrder
+  googleId?: Prisma.SortOrder
+  githubId?: Prisma.SortOrder
   dateFormat?: Prisma.SortOrder
   lang?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -505,6 +556,11 @@ export type UserMinOrderByAggregateInput = {
 
 export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserScalarRelationFilter = {
@@ -548,6 +604,22 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type UserCreateNestedOneWithoutAuditsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditsInput, Prisma.UserUncheckedCreateWithoutAuditsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutAuditsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditsInput, Prisma.UserUncheckedCreateWithoutAuditsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditsInput
+  upsert?: Prisma.UserUpsertWithoutAuditsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuditsInput, Prisma.UserUpdateWithoutAuditsInput>, Prisma.UserUncheckedUpdateWithoutAuditsInput>
+}
+
 export type UserCreateNestedOneWithoutHabitsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutHabitsInput, Prisma.UserUncheckedCreateWithoutHabitsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutHabitsInput
@@ -562,33 +634,125 @@ export type UserUpdateOneRequiredWithoutHabitsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutHabitsInput, Prisma.UserUpdateWithoutHabitsInput>, Prisma.UserUncheckedUpdateWithoutHabitsInput>
 }
 
-export type UserCreateWithoutHabitsInput = {
+export type UserCreateWithoutAuditsInput = {
   email: string
-  passwordHash: string
+  passwordHash?: string | null
   name: string
   secretBase32?: string | null
   totpEnabled?: boolean
+  googleId?: string | null
+  githubId?: string | null
   dateFormat?: $Enums.DateFormat
   lang?: $Enums.Lang
   isVerified?: boolean
   lastLogin?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAuditsInput = {
+  id?: number
+  email: string
+  passwordHash?: string | null
+  name: string
+  secretBase32?: string | null
+  totpEnabled?: boolean
+  googleId?: string | null
+  githubId?: string | null
+  dateFormat?: $Enums.DateFormat
+  lang?: $Enums.Lang
+  isVerified?: boolean
+  lastLogin?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAuditsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditsInput, Prisma.UserUncheckedCreateWithoutAuditsInput>
+}
+
+export type UserUpsertWithoutAuditsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuditsInput, Prisma.UserUncheckedUpdateWithoutAuditsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditsInput, Prisma.UserUncheckedCreateWithoutAuditsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuditsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuditsInput, Prisma.UserUncheckedUpdateWithoutAuditsInput>
+}
+
+export type UserUpdateWithoutAuditsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
+  lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuditsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
+  lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutHabitsInput = {
+  email: string
+  passwordHash?: string | null
+  name: string
+  secretBase32?: string | null
+  totpEnabled?: boolean
+  googleId?: string | null
+  githubId?: string | null
+  dateFormat?: $Enums.DateFormat
+  lang?: $Enums.Lang
+  isVerified?: boolean
+  lastLogin?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  audits?: Prisma.AuditCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutHabitsInput = {
   id?: number
   email: string
-  passwordHash: string
+  passwordHash?: string | null
   name: string
   secretBase32?: string | null
   totpEnabled?: boolean
+  googleId?: string | null
+  githubId?: string | null
   dateFormat?: $Enums.DateFormat
   lang?: $Enums.Lang
   isVerified?: boolean
   lastLogin?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  audits?: Prisma.AuditUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutHabitsInput = {
@@ -609,31 +773,37 @@ export type UserUpdateToOneWithWhereWithoutHabitsInput = {
 
 export type UserUpdateWithoutHabitsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  audits?: Prisma.AuditUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHabitsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   secretBase32?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totpEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateFormat?: Prisma.EnumDateFormatFieldUpdateOperationsInput | $Enums.DateFormat
   lang?: Prisma.EnumLangFieldUpdateOperationsInput | $Enums.Lang
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  audits?: Prisma.AuditUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -643,10 +813,12 @@ export type UserUncheckedUpdateWithoutHabitsInput = {
 
 export type UserCountOutputType = {
   habits: number
+  audits: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   habits?: boolean | UserCountOutputTypeCountHabitsArgs
+  audits?: boolean | UserCountOutputTypeCountAuditsArgs
 }
 
 /**
@@ -666,6 +838,13 @@ export type UserCountOutputTypeCountHabitsArgs<ExtArgs extends runtime.Types.Ext
   where?: Prisma.HabitWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuditsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -674,6 +853,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   secretBase32?: boolean
   totpEnabled?: boolean
+  googleId?: boolean
+  githubId?: boolean
   dateFormat?: boolean
   lang?: boolean
   isVerified?: boolean
@@ -681,6 +862,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   habits?: boolean | Prisma.User$habitsArgs<ExtArgs>
+  audits?: boolean | Prisma.User$auditsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -691,6 +873,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   secretBase32?: boolean
   totpEnabled?: boolean
+  googleId?: boolean
+  githubId?: boolean
   dateFormat?: boolean
   lang?: boolean
   isVerified?: boolean
@@ -706,6 +890,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   secretBase32?: boolean
   totpEnabled?: boolean
+  googleId?: boolean
+  githubId?: boolean
   dateFormat?: boolean
   lang?: boolean
   isVerified?: boolean
@@ -721,6 +907,8 @@ export type UserSelectScalar = {
   name?: boolean
   secretBase32?: boolean
   totpEnabled?: boolean
+  googleId?: boolean
+  githubId?: boolean
   dateFormat?: boolean
   lang?: boolean
   isVerified?: boolean
@@ -729,9 +917,10 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "secretBase32" | "totpEnabled" | "dateFormat" | "lang" | "isVerified" | "lastLogin" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "secretBase32" | "totpEnabled" | "googleId" | "githubId" | "dateFormat" | "lang" | "isVerified" | "lastLogin" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   habits?: boolean | Prisma.User$habitsArgs<ExtArgs>
+  audits?: boolean | Prisma.User$auditsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -741,14 +930,17 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     habits: Prisma.$HabitPayload<ExtArgs>[]
+    audits: Prisma.$AuditPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     email: string
-    passwordHash: string
+    passwordHash: string | null
     name: string
     secretBase32: string | null
     totpEnabled: boolean
+    googleId: string | null
+    githubId: string | null
     dateFormat: $Enums.DateFormat
     lang: $Enums.Lang
     isVerified: boolean
@@ -1150,6 +1342,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   habits<T extends Prisma.User$habitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$habitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  audits<T extends Prisma.User$auditsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1185,6 +1378,8 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly secretBase32: Prisma.FieldRef<"User", 'String'>
   readonly totpEnabled: Prisma.FieldRef<"User", 'Boolean'>
+  readonly googleId: Prisma.FieldRef<"User", 'String'>
+  readonly githubId: Prisma.FieldRef<"User", 'String'>
   readonly dateFormat: Prisma.FieldRef<"User", 'DateFormat'>
   readonly lang: Prisma.FieldRef<"User", 'Lang'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
@@ -1605,6 +1800,30 @@ export type User$habitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.HabitScalarFieldEnum | Prisma.HabitScalarFieldEnum[]
+}
+
+/**
+ * User.audits
+ */
+export type User$auditsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Audit
+   */
+  select?: Prisma.AuditSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Audit
+   */
+  omit?: Prisma.AuditOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditInclude<ExtArgs> | null
+  where?: Prisma.AuditWhereInput
+  orderBy?: Prisma.AuditOrderByWithRelationInput | Prisma.AuditOrderByWithRelationInput[]
+  cursor?: Prisma.AuditWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditScalarFieldEnum | Prisma.AuditScalarFieldEnum[]
 }
 
 /**
