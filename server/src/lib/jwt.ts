@@ -1,9 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { env } from '@shared/helpers/ConfigEnv';
 import { AUTH_TOKEN_DURATION, type AuthToken, type AuthTokenDuration, type AuthTokenType } from '@/types/auth.types';
-import { AppError } from '@/middlewares/ErrorHandler';
-import { ErrorCodes } from '@/enums/ErrorCodes';
-import { HttpStatus } from '@/enums/HttpStatus';
 
 type GenerateAuthTokenDTO = {
   userId: number;
@@ -27,9 +24,5 @@ export const generateAuthToken = (dto: GenerateAuthTokenDTO): string => {
 };
 
 export const verifyAuthToken = (token: string): AuthToken => {
-  try {
-    return jwt.verify(token, env.JWT_SECRET) as AuthToken;
-  } catch {
-    throw new AppError(ErrorCodes.UNAUTHORIZED, 'Invalid or expired token', HttpStatus.UNAUTHORIZED);
-  }
+  return jwt.verify(token, env.JWT_SECRET) as AuthToken;
 };

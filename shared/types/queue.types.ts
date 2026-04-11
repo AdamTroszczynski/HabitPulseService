@@ -13,7 +13,7 @@ export const AUTH_ROUTING_KEYS = {
 export const AUTH_EMAIL_TYPES = {
   ACTIVATION: 'activation',
   RESET_PASSWORD: 'resetPassword',
-};
+} as const;
 
 export type Exchange = (typeof EXCHANGES)[keyof typeof EXCHANGES];
 export type Queues = (typeof QUEUES)[keyof typeof QUEUES];

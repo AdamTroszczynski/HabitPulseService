@@ -26,7 +26,7 @@ export const sendToAuthQueue = {
       {
         exchange: EXCHANGES.AUTH,
         routingKey: AUTH_ROUTING_KEYS.EMAIL,
-        type: AUTH_EMAIL_TYPES.ACTIVATION,
+        type: AUTH_EMAIL_TYPES.RESET_PASSWORD,
         email,
       },
       'Task added to queue',

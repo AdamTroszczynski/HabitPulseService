@@ -30,7 +30,7 @@ const startApp = async (attempt = 1) => {
       process.exit(1);
     }
     logger.warn({ attempt }, 'Failed to connect, retrying...');
-    setTimeout(() => startApp(attempt), 1000);
+    setTimeout(() => startApp(attempt + 1), 10000);
   }
 };
 

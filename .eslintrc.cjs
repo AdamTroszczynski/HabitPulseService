@@ -6,12 +6,7 @@ module.exports = {
     jest: true,
   },
   parser: '@typescript-eslint/parser',
-  extends: [
-    'eslint:recommended',
-    'airbnb-base',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['eslint:recommended', 'airbnb-base', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   rules: {
     'prettier/prettier': 'error',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -19,6 +14,10 @@ module.exports = {
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
+    'no-useless-constructor': 'off',
+    '@typescript-eslint/no-useless-constructor': 'off',
+    'no-empty-function': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
     'import/no-extraneous-dependencies': [
       'error',
       {

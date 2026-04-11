@@ -9,6 +9,7 @@ datasource db {
 
 enum Lang {
   PL @map("pl")
+  EN @map("en")
 }
 
 enum DateFormat {
@@ -25,24 +26,33 @@ enum ReminderTaskStatus {
 }
 
 model User {
-  id           Int        @id @default(autoincrement())
-  email        String     @unique @db.VarChar(255)
-  passwordHash String?    @map("password_hash")
-  name         String     @db.VarChar(40)
-  secretBase32 String?    @map("secret_base32")
-  totpEnabled  Boolean    @default(false) @map("totp-enabled")
-  googleId     String?    @unique @map("google_id")
-  githubId     String?    @unique @map("github_id")
-  dateFormat   DateFormat @default(DD_MM_YYYY) @map("date_format")
-  lang         Lang       @default(PL)
-  habits       Habit[]
+  id           Int       @id @default(autoincrement())
+  email        String    @unique @db.VarChar(255)
+  passwordHash String?   @map("password_hash")
+  secretBase32 String?   @map("secret_base32")
+  totpEnabled  Boolean   @default(false) @map("totp_enabled")
+  googleId     String?   @unique @map("google_id")
+  githubId     String?   @unique @map("github_id")
+  isVerified   Boolean   @default(false) @map("is_verified")
+  lastLogin    DateTime? @map("last_login")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
   audits       Audit[]
-  isVerified   Boolean    @default(false) @map("is_verified")
-  lastLogin    DateTime?  @map("last_login")
-  createdAt    DateTime   @default(now()) @map("created_at")
-  updatedAt    DateTime   @updatedAt @map("updated_at")
+  habits       Habit[]
+  profile      Profile?
 
   @@map("users")
+}
+
+model Profile {
+  id         Int        @id @default(autoincrement())
+  name       String     @db.VarChar(40)
+  dateFormat DateFormat @default(DD_MM_YYYY) @map("date_format")
+  lang       Lang       @default(PL)
+  userId     Int        @unique @map("user_id")
+  user       User       @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
 }
 
 model Audit {
