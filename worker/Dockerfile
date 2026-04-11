@@ -5,11 +5,12 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.base.json ./
 COPY worker/package*.json ./worker/
+COPY worker/tsconfig.json ./worker/
+COPY shared/ ./shared/
 
 RUN npm ci --ignore-scripts
 
 COPY worker/src ./worker/src
-COPY worker/tsconfig.json ./worker/
 
 RUN npm run build -w worker
 

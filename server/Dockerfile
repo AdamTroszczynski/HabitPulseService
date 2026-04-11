@@ -8,6 +8,7 @@ COPY server/package*.json ./server/
 COPY server/tsconfig.json ./server/
 COPY server/src/prisma ./server/src/prisma/
 COPY server/prisma.config.ts ./server/
+COPY shared/ ./shared/
 
 RUN npm ci --ignore-scripts
 RUN npx prisma generate --schema=server/src/prisma/schema.prisma
