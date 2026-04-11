@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { logger } from '@shared/lib/logger';
 import { AUTH_TOKEN_NAME } from '@/const/CommonConst';
 import { verifyAuthToken } from '@/lib/jwt';
 import { AppError } from './ErrorHandler';
@@ -7,7 +6,6 @@ import { ErrorCodes } from '@/enums/ErrorCodes';
 import { HttpStatus } from '@/enums/HttpStatus';
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  logger.debug({ path: req.path });
   if (req.path === '/v1/logout') return next();
   const authToken = req.cookies[AUTH_TOKEN_NAME];
 
