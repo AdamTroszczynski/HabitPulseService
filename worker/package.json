@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file=../.env src/worker.ts",
-    "build": "tsup src/worker.ts --format esm --out-dir dist/src --tsconfig tsconfig.json --external amqplib",
+    "build": "tsup src/worker.ts --format esm --out-dir dist/src --tsconfig tsconfig.json --no-bundle",
     "preview": "npm run build && node dist/worker.js",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
