@@ -1,55 +1,68 @@
-import { User } from '@prisma/client';
-import prisma from '@/lib/prisma';
+import { PrismaClient, User } from '@prisma/client';
 import {
-  ChangeUserPasswordDTO,
-  ChangeUserProviderIdDTO,
-  ChangeUserTotpSecretDTO,
+  UpdateUserPasswordDTO,
+  UpdateUserProviderIdDTO,
+  UpdateUserTotpSecretDTO,
   CreateUserDTO,
   CreateUserOAuthDTO,
-  EnableUserTotpDTO,
+  UpdateUserTotpDTO,
   GetUserByEmailDTO,
   GetUserByIdDTO,
   GetUserByProviderDTO,
-  VerifyUserDTO,
+  UpdateUserDTO,
+  UpdateUserVerificationDTO,
+  UpdateUserEmailDTO,
 } from '@/repositories/User/UserRepository.types';
 
-export const getUserById = (dto: GetUserByIdDTO): Promise<User | null> => {
-  return prisma.user.findUnique({ where: dto });
-};
+export class UserRepository {
+  constructor(private readonly prisma: PrismaClient) {}
 
-export const getUserByEmail = (dto: GetUserByEmailDTO): Promise<User | null> => {
-  return prisma.user.findUnique({ where: dto });
-};
+  getUserById(dto: GetUserByIdDTO): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: dto });
+  }
 
-export const getUserByProvider = (dto: GetUserByProviderDTO): Promise<User | null> => {
-  return prisma.user.findUnique({ where: dto.providerName === 'google' ? { googleId: dto.providerValue } : { githubId: dto.providerValue } });
-};
+  getUserByEmail(dto: GetUserByEmailDTO): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: dto });
+  }
 
-export const createUser = (dto: CreateUserDTO): Promise<User> => {
-  return prisma.user.create({ data: { ...dto, name: dto.email } });
-};
+  getUserByProvider(dto: GetUserByProviderDTO): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: dto.providerName === 'google' ? { googleId: dto.providerValue } : { githubId: dto.providerValue } });
+  }
 
-export const createUserOAuth = (dto: CreateUserOAuthDTO): Promise<User> => {
-  const defaultFields = { email: dto.email, name: dto.email };
-  return prisma.user.create({ data: dto.providerName === 'google' ? { googleId: dto.providerValue, ...defaultFields } : { githubId: dto.providerValue, ...defaultFields } });
-};
+  createUser(dto: CreateUserDTO): Promise<User> {
+    return this.prisma.user.create({ data: { ...dto, profile: { create: { name: dto.email } } } });
+  }
 
-export const changeUserPassword = (dto: ChangeUserPasswordDTO): Promise<User> => {
-  return prisma.user.update({ where: { id: dto.id }, data: { passwordHash: dto.passwordHash } });
-};
+  createUserOAuth(dto: CreateUserOAuthDTO): Promise<User> {
+    const defaultFields = { email: dto.email, name: dto.email };
+    return this.prisma.user.create({ data: dto.providerName === 'google' ? { googleId: dto.providerValue, ...defaultFields } : { githubId: dto.providerValue, ...defaultFields } });
+  }
 
-export const changeUserTotp = (dto: EnableUserTotpDTO): Promise<User> => {
-  return prisma.user.update({ where: { id: dto.id }, data: { totpEnabled: dto.isEnabled } });
-};
+  updateUser(dto: UpdateUserDTO): Promise<User> {
+    return this.prisma.user.update({ where: { email: dto.email! }, data: dto });
+  }
 
-export const changeUserTotpSecret = (dto: ChangeUserTotpSecretDTO): Promise<User> => {
-  return prisma.user.update({ where: { id: dto.id }, data: { secretBase32: dto.secret } });
-};
+  updateUserEmail(dto: UpdateUserEmailDTO): Promise<User> {
+    return this.prisma.user.update({ where: { id: dto.userId }, data: { email: dto.email } });
+  }
 
-export const changeUserProviderId = (dto: ChangeUserProviderIdDTO): Promise<User> => {
-  return prisma.user.update({ where: { id: dto.id }, data: dto.providerName === 'google' ? { googleId: dto.providerValue } : { githubId: dto.providerValue } });
-};
+  updateUserPassword(dto: UpdateUserPasswordDTO): Promise<User> {
+    return this.prisma.user.update({ where: { id: dto.id }, data: { passwordHash: dto.passwordHash } });
+  }
 
-export const verifyUser = (dto: VerifyUserDTO): Promise<User> => {
-  return prisma.user.update({ where: { id: dto.id }, data: { isVerified: true } });
-};
+  updateUserTotp(dto: UpdateUserTotpDTO): Promise<User> {
+    return this.prisma.user.update({ where: { id: dto.id }, data: { totpEnabled: dto.isEnabled } });
+  }
+
+  updateUserTotpSecret(dto: UpdateUserTotpSecretDTO): Promise<User> {
+    return this.prisma.user.update({ where: { id: dto.id }, data: { secretBase32: dto.secret } });
+  }
+
+  updateUserProviderId(dto: UpdateUserProviderIdDTO): Promise<User> {
+    return this.prisma.user.update({ where: { id: dto.id }, data: dto.providerName === 'google' ? { googleId: dto.providerValue } : { githubId: dto.providerValue } });
+  }
+
+  updateUserVerification(dto: UpdateUserVerificationDTO): Promise<User> {
+    return this.prisma.user.update({ where: { id: dto.id }, data: { isVerified: true } });
+  }
+}

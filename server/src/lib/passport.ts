@@ -2,20 +2,20 @@ import passport, { Profile } from 'passport';
 import { Strategy as GoogleStrategy, VerifyCallback } from 'passport-google-oauth20';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import { env } from '@shared/helpers/ConfigEnv';
-import { changeUserProviderId, createUserOAuth, getUserByEmail, getUserByProvider } from '@/repositories/User/UserRepository';
+import { userRepository } from '@/containers';
 
 export type Providers = 'google' | 'github';
 
 const handleOAuthUser = async (provider: Providers, providerId: string, email: string) => {
-  let user = await getUserByProvider({ providerName: provider, providerValue: providerId });
+  let user = await userRepository.getUserByProvider({ providerName: provider, providerValue: providerId });
 
   if (!user) {
-    user = await getUserByEmail({ email });
+    user = await userRepository.getUserByEmail({ email });
 
     if (user) {
-      user = await changeUserProviderId({ id: user.id, providerName: provider, providerValue: providerId });
+      user = await userRepository.updateUserProviderId({ id: user.id, providerName: provider, providerValue: providerId });
     } else {
-      user = await createUserOAuth({ email, providerName: provider, providerValue: providerId });
+      user = await userRepository.createUserOAuth({ email, providerName: provider, providerValue: providerId });
     }
   }
 

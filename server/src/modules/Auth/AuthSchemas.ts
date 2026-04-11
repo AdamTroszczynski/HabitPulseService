@@ -38,6 +38,10 @@ export const ResendActivationDTOSchema = z.object({
   email: z.email().nonempty(),
 });
 
+export const OauthCallbackDTOSchema = z.object({
+  userId: z.number(),
+});
+
 export type LoginDTO = z.infer<typeof LoginDTOSchema>;
 export type CheckTotpCodeDTO = z.infer<typeof CheckTotpCodeDTOSchema>;
 export type LogoutDTO = z.infer<typeof LogoutDTOSchema>;
@@ -46,3 +50,4 @@ export type ActivateDTO = z.infer<typeof ActivateDTOSchema>;
 export type ResetPasswordDTO = z.infer<typeof ResetPasswordDTOSchema>;
 export type ChangePasswordDTO = z.infer<typeof ChangePasswordDTOSchema>;
 export type ResendActivationDTO = z.infer<typeof ResendActivationDTOSchema>;
+export type OauthCallbackDTO = z.infer<typeof OauthCallbackDTOSchema>;

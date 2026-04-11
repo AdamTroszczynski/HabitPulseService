@@ -1,31 +1,35 @@
 import { Request, Response } from 'express';
 import { ok } from '@/helpers/ResponsHelpers';
-import { disableService, enableService, verifySetupService } from '@/modules/Totp/TotpServices';
+import { TotpService } from '@/modules/Totp/TotpServices';
 import { DisableDTOSchema, VerifySetupDTOSchema } from '@/modules/Totp/TotpSchemas';
 
-export const enableController = async (req: Request, res: Response): Promise<void> => {
-  const userId = req.userId!;
+export class TotpController {
+  constructor(private readonly totpService: TotpService) {}
 
-  const data = await enableService({ userId });
+  async enable(req: Request, res: Response): Promise<void> {
+    const userId = req.userId!;
 
-  ok(res, data);
-};
+    const data = await this.totpService.enable({ userId });
 
-export const disableController = async (req: Request, res: Response): Promise<void> => {
-  const userId = req.userId!;
+    ok(res, data);
+  }
 
-  const data = DisableDTOSchema.parse(req.body);
+  async disable(req: Request, res: Response): Promise<void> {
+    const userId = req.userId!;
 
-  await disableService({ userId, code: data.code });
+    const data = DisableDTOSchema.parse(req.body);
 
-  ok(res, null);
-};
+    await this.totpService.disable({ userId, code: data.code });
 
-export const verifySetupController = async (req: Request, res: Response): Promise<void> => {
-  const userId = req.userId!;
-  const dto = VerifySetupDTOSchema.parse(req.body);
+    ok(res, null);
+  }
 
-  await verifySetupService({ userId, code: dto.code });
+  async verifySetup(req: Request, res: Response): Promise<void> {
+    const userId = req.userId!;
+    const dto = VerifySetupDTOSchema.parse(req.body);
 
-  ok(res, null);
-};
+    await this.totpService.verifySetup({ userId, code: dto.code });
+
+    ok(res, null);
+  }
+}

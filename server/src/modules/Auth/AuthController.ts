@@ -1,95 +1,93 @@
 import { Request, Response } from 'express';
 import { User } from '@prisma/client';
 import { ActivateDTOSchema, ChangePasswordDTOSchema, CheckTotpCodeDTOSchema, LoginDTOSchema, RegisterDTOSchema, ResendActivationDTOSchema, ResetPasswordDTOSchema } from '@/modules/Auth/AuthSchemas';
-import { activateService, changePasswordService, checkTotpCodeService, loginService, logoutService, registerService, resendActivationService, resetPasswordService } from '@/modules/Auth/AuthService';
+import { AuthService } from '@/modules/Auth/AuthService';
 import { removeCookie, sendCookie } from '@/helpers/SendCookie';
 import { AUTH_TOKEN_NAME } from '@/const/CommonConst';
 import { fail, ok } from '@/helpers/ResponsHelpers';
 import { HttpStatus } from '@/enums/HttpStatus';
 import { ErrorCodes } from '@/enums/ErrorCodes';
-import { generateAuthToken } from '@/lib/jwt';
 
-export const loginController = async (req: Request, res: Response): Promise<void> => {
-  const dto = LoginDTOSchema.parse(req.body);
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
 
-  const data = await loginService({ ...dto });
+  async login(req: Request, res: Response): Promise<void> {
+    const dto = LoginDTOSchema.parse(req.body);
 
-  sendCookie(res, AUTH_TOKEN_NAME, data.token, dto.rememberMe);
+    const data = await this.authService.login(dto);
 
-  ok(res, data.requiresTOTP);
-};
+    sendCookie(res, AUTH_TOKEN_NAME, data.token, dto.rememberMe);
 
-export const checkTotpCodeController = async (req: Request, res: Response): Promise<void> => {
-  const dto = CheckTotpCodeDTOSchema.omit({ token: true }).parse(req.body);
-  const authToken = req.cookies[AUTH_TOKEN_NAME];
+    ok(res, { requiresTOTP: data.requiresTOTP });
+  }
 
-  const data = await checkTotpCodeService({ ...dto, token: authToken });
+  async checkTotpCode(req: Request, res: Response): Promise<void> {
+    const dto = CheckTotpCodeDTOSchema.omit({ token: true }).parse(req.body);
+    const authToken = req.cookies[AUTH_TOKEN_NAME];
 
-  sendCookie(res, AUTH_TOKEN_NAME, data.token, dto.rememberMe);
+    const data = await this.authService.checkTotpCode({ ...dto, token: authToken });
 
-  ok(res, null);
-};
+    sendCookie(res, AUTH_TOKEN_NAME, data.token, dto.rememberMe);
 
-export const logoutController = async (req: Request, res: Response): Promise<void> => {
-  const authToken = req.cookies[AUTH_TOKEN_NAME];
-
-  if (authToken) {
-    await logoutService({ token: authToken });
-    removeCookie(res, AUTH_TOKEN_NAME);
     ok(res, null);
-  } else fail(res, ErrorCodes.UNAUTHORIZED, 'Token does not exist', HttpStatus.UNAUTHORIZED);
-};
+  }
 
-export const registerController = async (req: Request, res: Response): Promise<void> => {
-  const dto = RegisterDTOSchema.parse(req.body);
+  async logout(req: Request, res: Response): Promise<void> {
+    const authToken = req.cookies[AUTH_TOKEN_NAME];
 
-  await registerService(dto);
+    if (authToken) {
+      await this.authService.logout({ token: authToken });
+      removeCookie(res, AUTH_TOKEN_NAME);
+      ok(res, null);
+    } else fail(res, ErrorCodes.UNAUTHORIZED, 'Token does not exist', HttpStatus.UNAUTHORIZED);
+  }
 
-  ok(res, null, HttpStatus.CREATED);
-};
+  async register(req: Request, res: Response): Promise<void> {
+    const dto = RegisterDTOSchema.parse(req.body);
 
-export const activeController = async (req: Request, res: Response): Promise<void> => {
-  const dto = ActivateDTOSchema.parse(req.body);
+    await this.authService.register(dto);
 
-  await activateService(dto);
+    ok(res, null, HttpStatus.CREATED);
+  }
 
-  ok(res, null);
-};
+  async active(req: Request, res: Response): Promise<void> {
+    const dto = ActivateDTOSchema.parse(req.body);
 
-export const resendActivationController = async (req: Request, res: Response): Promise<void> => {
-  const dto = ResendActivationDTOSchema.parse(req.body);
+    await this.authService.activate(dto);
 
-  await resendActivationService(dto);
+    ok(res, null);
+  }
 
-  ok(res, null);
-};
+  async resendActivation(req: Request, res: Response): Promise<void> {
+    const dto = ResendActivationDTOSchema.parse(req.body);
 
-export const resetPasswordController = async (req: Request, res: Response): Promise<void> => {
-  const dto = ResetPasswordDTOSchema.parse(req.body);
+    await this.authService.resendActivation(dto);
 
-  await resetPasswordService(dto);
+    ok(res, null);
+  }
 
-  ok(res, null);
-};
+  async resetPassword(req: Request, res: Response): Promise<void> {
+    const dto = ResetPasswordDTOSchema.parse(req.body);
 
-export const changePasswordController = async (req: Request, res: Response): Promise<void> => {
-  const dto = ChangePasswordDTOSchema.parse(req.body);
+    await this.authService.resetPassword(dto);
 
-  await changePasswordService(dto);
+    ok(res, null);
+  }
 
-  ok(res, null);
-};
+  async changePassword(req: Request, res: Response): Promise<void> {
+    const dto = ChangePasswordDTOSchema.parse(req.body);
 
-export const oauthCallbackController = async (req: Request, res: Response): Promise<void> => {
-  const user = req.user as User;
+    await this.authService.changePassword(dto);
 
-  const token = generateAuthToken({
-    userId: user.id,
-    duration: 'long',
-    type: 'auth',
-  });
+    ok(res, null);
+  }
 
-  sendCookie(res, AUTH_TOKEN_NAME, token, true);
+  async oauthCallback(req: Request, res: Response): Promise<void> {
+    const user = req.user as User;
+    const token = await this.authService.oauthCallback({ userId: user.id });
 
-  res.redirect('/');
-};
+    sendCookie(res, AUTH_TOKEN_NAME, token, true);
+
+    res.redirect('/');
+  }
+}
