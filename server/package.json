@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file=../.env src/server.ts",
-    "build": "tsup src/server.ts --format esm --out-dir dist/src --tsconfig tsconfig.json --no-bundle",
+    "build": "tsup src/server.ts --format esm --out-dir dist/src --tsconfig tsconfig.json --external @prisma/client --external amqplib",
     "preview": "npm run build && node dist/server.js",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
