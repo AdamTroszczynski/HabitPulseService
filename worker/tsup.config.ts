@@ -1,9 +1,17 @@
+// worker/tsup.config.ts
 import { defineConfig } from 'tsup';
+import { resolve } from 'node:path';
 
 export default defineConfig({
-  entry: ['src/server.ts'],
+  entry: ['src/worker.ts'],
   format: ['esm'],
-  outDir: 'dist/src',
-  bundle: false,
+  outDir: 'dist',
   tsconfig: 'tsconfig.json',
+  external: [/node_modules/],
+  esbuildOptions(options) {
+    options.alias = {
+      '@shared': resolve('../shared'),
+      '@': resolve('./src'),
+    };
+  },
 });

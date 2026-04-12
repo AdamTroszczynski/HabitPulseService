@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file=../.env src/server.ts",
-    "build": "tsc --project tsconfig.json && tsc-alias --project tsconfig.json",
+    "build": "tsup",
     "preview": "npm run build && node dist/server.js",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
