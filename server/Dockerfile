@@ -28,9 +28,7 @@ COPY server/prisma.config.ts ./server/
 
 RUN npm ci --omit=dev --ignore-scripts
 
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma/client ./node_modules/@prisma/client
-
+COPY --from=builder /app/server/generated ./server/generated
 COPY --from=builder /app/server/dist ./server/dist
 
 EXPOSE 3000
