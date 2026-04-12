@@ -6,8 +6,8 @@
     "rootDir": "../",
     "outDir": "./dist",
     "paths": {
-      "@/*": ["./worker/src/*"],
-      "@shared/*": ["./shared/*"]
+      "@shared/*": ["./shared/*"],
+      "@/*": ["./worker/src/*"]
     }
   }
 }

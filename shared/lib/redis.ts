@@ -1,7 +1,7 @@
 import { createClient, SetOptions } from 'redis';
 import { env } from '@shared/helpers/ConfigEnv';
 import { logger } from '@shared/lib/logger';
-import { REDIS_PREFIX } from '@/const/CommonConst';
+import { REDIS_PREFIX } from '@shared/const/CommonConst';
 
 const client = createClient({ url: env.REDIS_URL });
 

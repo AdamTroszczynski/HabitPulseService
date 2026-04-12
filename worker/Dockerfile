@@ -26,4 +26,5 @@ RUN npm ci --omit=dev --ignore-scripts
 
 COPY --from=builder /app/worker/dist ./worker/dist
 
-CMD ["node", "worker/dist/src/worker.js"]
+CMD ["node", "worker/dist/worker/src/worker.js"]
+
