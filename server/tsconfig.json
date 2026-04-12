@@ -7,8 +7,7 @@
     "outDir": "./dist",
     "paths": {
       "@/*": ["./server/src/*"],
-      "@shared/*": ["./shared/*"],
-      "@prisma/*": ["./server/generated/prisma/*"]
+      "@shared/*": ["./shared/*"]
     }
   }
 }

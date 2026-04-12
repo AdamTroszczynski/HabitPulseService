@@ -1,4 +1,4 @@
-import { DateFormat } from '@prisma/enums';
+import { DateFormat } from 'server/generated/prisma/enums';
 import { Providers } from '@/lib/passport';
 
 export type GetUserByIdDTO = {

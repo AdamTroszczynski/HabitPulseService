@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import { CreateAuditDTO } from './AuditRepository.types';
+import { PrismaClient } from 'server/generated/prisma/client';
+import { CreateAuditDTO } from '@/repositories/Audit/AuditRepository.types';
 
 export class AuditRepository {
   constructor(private readonly prisma: PrismaClient) {}

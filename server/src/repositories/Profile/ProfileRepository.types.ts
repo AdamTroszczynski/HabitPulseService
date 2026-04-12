@@ -1,4 +1,4 @@
-import { DateFormat, Lang } from '@prisma/enums';
+import { DateFormat, Lang } from 'server/generated/prisma/enums';
 
 export type GetProfileDTO = { userId: number };
 
