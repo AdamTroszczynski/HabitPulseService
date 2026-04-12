@@ -3,7 +3,7 @@ import { defineConfig } from 'tsup';
 import { resolve } from 'node:path';
 
 export default defineConfig({
-  entry: ['src/worker.ts'],
+  entry: ['worker/src/worker.ts'],
   format: ['esm'],
   outDir: 'dist',
   tsconfig: 'tsconfig.json',
