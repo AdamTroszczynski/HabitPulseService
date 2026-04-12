@@ -17,7 +17,6 @@ COPY server/src ./server/src
 
 RUN npm run build -w server
 
-# ---- runtime ----
 FROM node:22-alpine AS runner
 
 WORKDIR /app
@@ -28,6 +27,9 @@ COPY server/src/prisma ./server/src/prisma/
 COPY server/prisma.config.ts ./server/
 
 RUN npm ci --omit=dev --ignore-scripts
+
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma/client ./node_modules/@prisma/client
 
 COPY --from=builder /app/server/dist ./server/dist
 

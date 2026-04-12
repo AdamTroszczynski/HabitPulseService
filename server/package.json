@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file=../.env src/server.ts",
-    "build": "tsup-node src/server.ts --format esm --target node22 --out-dir dist/src --tsconfig tsconfig.json --no-splitting",
+    "build": "tsup-node src/server.ts --format esm --out-dir dist/src --tsconfig tsconfig.json --no-splitting",
     "preview": "npm run build && node dist/server.js",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
