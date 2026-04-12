@@ -1,7 +1,7 @@
 import { ZodError } from 'zod';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { Prisma } from 'server/generated/prisma/client';
+import { Prisma } from '@db/client';
 import { logger } from '@shared/lib/logger';
 import { fail } from '@/helpers/ResponsHelpers';
 import { ErrorCodes } from '@/enums/ErrorCodes';

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from 'server/generated/prisma/client';
+import { User } from '@db/client';
 import { ActivateDTOSchema, ChangePasswordDTOSchema, CheckTotpCodeDTOSchema, LoginDTOSchema, RegisterDTOSchema, ResendActivationDTOSchema, ResetPasswordDTOSchema } from '@/modules/Auth/AuthSchemas';
 import { AuthService } from '@/modules/Auth/AuthService';
 import { removeCookie, sendCookie } from '@/helpers/SendCookie';

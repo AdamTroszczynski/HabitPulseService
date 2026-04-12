@@ -1,4 +1,4 @@
-import { PrismaClient } from 'server/generated/prisma/client';
+import { PrismaClient } from '@db/client';
 import { CreateAuditDTO } from '@/repositories/Audit/AuditRepository.types';
 
 export class AuditRepository {

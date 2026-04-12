@@ -1,4 +1,4 @@
-import { Profile } from 'server/generated/prisma/client';
+import { Profile } from '@db/client';
 import { GetProfileDTO, UpdateProfileDTO } from './ProfileServices.types';
 import { ProfileRepository } from '@/repositories/Profile/ProfileRepository';
 

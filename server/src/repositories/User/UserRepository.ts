@@ -1,4 +1,4 @@
-import { PrismaClient, User } from 'server/generated/prisma/client';
+import { PrismaClient, User } from '@db/client';
 import {
   UpdateUserPasswordDTO,
   UpdateUserProviderIdDTO,
